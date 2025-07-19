@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>音ゲー向けJS/TS音声ライブラリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Noto Sans JP", "Inter", sans-serif;
+        background-color: #111827;
+        color: #e5e7eb;
+      }
+      .container {
+        max-width: 1024px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .header {
+        border-bottom: 1px solid #374151;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        background: linear-gradient(to right, #4f46e5, #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .header p {
+        font-size: 1.125rem;
+        color: #9ca3af;
+        margin-top: 1rem;
+      }
+      .card {
+        background-color: #1f2937;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid #374151;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.2),
+          0 10px 10px -5px rgba(79, 70, 229, 0.1);
+      }
+      .card h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #f9fafb;
+        border-bottom: 2px solid #4f46e5;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #d1d5db;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .card p,
+      .card li {
+        color: #9ca3af;
+        line-height: 1.75;
+      }
+      .card ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+      }
+      .code-block {
+        background-color: #0d1117;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        margin-top: 1rem;
+        overflow-x: auto;
+        position: relative;
+      }
+      .code-block pre {
+        font-family: "Menlo", "Monaco", "Consolas", monospace;
+        font-size: 0.875rem;
+        color: #c9d1d9;
+      }
+      .code-comment {
+        color: #8b949e;
+      }
+      .code-keyword {
+        color: #ff7b72;
+      }
+      .code-string {
+        color: #a5d6ff;
+      }
+      .code-function {
+        color: #d2a8ff;
+      }
+      .code-variable {
+        color: #79c0ff;
+      }
+      .copy-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background-color: #374151;
+        color: #d1d5db;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-size: 0.75rem;
+        transition: background-color 0.2s;
+      }
+      .copy-btn:hover {
+        background-color: #4b5563;
+      }
+      .comparison-table {
+        width: 100%;
+        margin-top: 2rem;
+        border-collapse: collapse;
+      }
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #374151;
+        padding: 1rem;
+        text-align: left;
+      }
+      .comparison-table th {
+        background-color: #1f2937;
+        font-weight: 600;
+      }
+      .comparison-table td {
+        background-color: #111827;
+      }
+      .comparison-table .check {
+        color: #34d399;
+        font-weight: bold;
+        text-align: center;
+      }
+      .comparison-table .good {
+        color: #a7f3d0;
+        text-align: center;
+      }
+      .comparison-table .normal {
+        color: #fcd34d;
+        text-align: center;
+      }
+      .comparison-table .expert {
+        color: #fca5a5;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>音ゲー向けJS/TS音声ライブラリ</h1>
+        <p>
+          正確な時間管理が命の音ゲー開発。その心臓部となる音声処理に最適なライブラリを徹底比較します。
+        </p>
+      </header>
+
+      <main>
+        <!-- Howler.js Card -->
+        <section class="card">
+          <h2>Howler.js</h2>
+          <p>
+            Web Audio
+            APIをラップし、手軽さと高機能を両立させた人気のライブラリ。クロスブラウザ対応も万全で、多くの場面で最初の選択肢となります。
+          </p>
+
+          <h3>主な特徴</h3>
+          <ul>
+            <li>シンプルで直感的なAPI。学習コストが低い。</li>
+            <li>再生、停止、ループ、フェードなど基本的な操作が簡単。</li>
+            <li>
+              音声スプライト機能で、一つのファイルから複数の効果音を管理可能。
+            </li>
+            <li>
+              Web Audio APIが使えない古いブラウザではHTML5
+              Audioに自動フォールバック。
+            </li>
+          </ul>
+
+          <h3>こんな場合に最適</h3>
+          <p>
+            手軽に音ゲー開発を始めたい場合や、複雑な音声処理よりも開発速度を重視する場合に最適です。
+          </p>
+
+          <h3>再生時間の取得コード</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code><span class="code-comment">// Howler.jsをインポート</span>
+<span class="code-keyword">import</span> { Howl } <span class="code-keyword">from</span> <span class="code-string">'howler'</span>;
+
+<span class="code-comment">// 音声ファイルを読み込み</span>
+<span class="code-keyword">const</span> <span class="code-variable">sound</span> = <span class="code-keyword">new</span> <span class="code-function">Howl</span>({
+  <span class="code-variable">src</span>: [<span class="code-string">'music.mp3'</span>]
+});
+
+<span class="code-comment">// 再生開始</span>
+<span class="code-variable">sound</span>.<span class="code-function">play</span>();
+
+<span class="code-comment">// requestAnimationFrameで再生時間を監視</span>
+<span class="code-keyword">function</span> <span class="code-function">update</span>() {
+  <span class="code-comment">// seek()で現在の再生時間を秒単位で取得</span>
+  <span class="code-keyword">const</span> <span class="code-variable">currentTime</span> = <span class="code-variable">sound</span>.<span class="code-function">seek</span>();
+  <span class="code-variable">console</span>.<span class="code-function">log</span>(<span class="code-string">`現在の再生時間: </span><span class="code-variable">${currentTime.toFixed(3)}</span><span class="code-string"> 秒`</span>);
+  
+  <span class="code-comment">// ゲームが実行中であれば、次のフレームで再度呼び出す</span>
+  <span class="code-function">requestAnimationFrame</span>(<span class="code-variable">update</span>);
+}
+<span class="code-function">update</span>();
+</code></pre>
+          </div>
+        </section>
+
+        <!-- Web Audio API Card -->
+        <section class="card">
+          <h2>Web Audio API (ネイティブ)</h2>
+          <p>
+            ブラウザ標準のAPI。最高の精度と柔軟性を持ち、音声処理のすべてをコントロールしたいプロフェッショナル向けの選択肢です。
+          </p>
+
+          <h3>主な特徴</h3>
+          <ul>
+            <li>フレーム単位での極めて正確なタイミング制御が可能。</li>
+            <li>
+              音量、パン、フィルタ、エフェクトなど、高度で複雑な音声処理を自由に実装できる。
+            </li>
+            <li>外部ライブラリへの依存がない。</li>
+            <li>音声の生成や合成も可能。</li>
+          </ul>
+
+          <h3>こんな場合に最適</h3>
+          <p>
+            ミリ秒単位のズレも許されないシビアな判定を持つ音ゲーや、独自の音声エフェクトを実装したい場合に最適です。
+          </p>
+
+          <h3>再生時間の取得コード</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code><span class="code-comment">// AudioContextの初期化</span>
+<span class="code-keyword">const</span> <span class="code-variable">audioContext</span> = <span class="code-keyword">new</span> <span class="code-function">AudioContext</span>();
+<span class="code-keyword">let</span> <span class="code-variable">startTime</span> = 0;
+<span class="code-keyword">let</span> <span class="code-variable">sourceNode</span>;
+
+<span class="code-comment">// 音声ファイルを非同期で読み込み、デコード</span>
+<span class="code-keyword">async function</span> <span class="code-function">setupSound</span>() {
+  <span class="code-keyword">const</span> <span class="code-variable">response</span> = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'music.mp3'</span>);
+  <span class="code-keyword">const</span> <span class="code-variable">arrayBuffer</span> = <span class="code-keyword">await</span> <span class="code-variable">response</span>.<span class="code-function">arrayBuffer</span>();
+  <span class="code-keyword">const</span> <span class="code-variable">audioBuffer</span> = <span class="code-keyword">await</span> <span class="code-variable">audioContext</span>.<span class="code-function">decodeAudioData</span>(<span class="code-variable">arrayBuffer</span>);
+
+  <span class="code-variable">sourceNode</span> = <span class="code-variable">audioContext</span>.<span class="code-function">createBufferSource</span>();
+  <span class="code-variable">sourceNode</span>.<span class="code-variable">buffer</span> = <span class="code-variable">audioBuffer</span>;
+  <span class="code-variable">sourceNode</span>.<span class="code-function">connect</span>(<span class="code-variable">audioContext</span>.<span class="code-variable">destination</span>);
+  
+  <span class="code-comment">// 再生開始と同時にコンテキストの時間を記録</span>
+  <span class="code-variable">startTime</span> = <span class="code-variable">audioContext</span>.<span class="code-variable">currentTime</span>;
+  <span class="code-variable">sourceNode</span>.<span class="code-function">start</span>(0);
+
+  <span class="code-function">update</span>();
+}
+
+<span class="code-keyword">function</span> <span class="code-function">update</span>() {
+  <span class="code-comment">// 現在のコンテキスト時間との差分で再生時間を計算</span>
+  <span class="code-keyword">const</span> <span class="code-variable">elapsedTime</span> = <span class="code-variable">audioContext</span>.<span class="code-variable">currentTime</span> - <span class="code-variable">startTime</span>;
+  <span class="code-variable">console</span>.<span class="code-function">log</span>(<span class="code-string">`現在の再生時間: </span><span class="code-variable">${elapsedTime.toFixed(3)}</span><span class="code-string"> 秒`</span>);
+  <span class="code-function">requestAnimationFrame</span>(<span class="code-variable">update</span>);
+}
+
+<span class="code-function">setupSound</span>();
+</code></pre>
+          </div>
+        </section>
+
+        <!-- Tone.js Card -->
+        <section class="card">
+          <h2>Tone.js</h2>
+          <p>
+            音楽制作(DAW)の概念を取り入れた、音楽的な同期処理に特化したライブラリ。BPMに合わせたイベント管理が非常に強力です。
+          </p>
+
+          <h3>主な特徴</h3>
+          <ul>
+            <li>BPMと完全に同期したイベントのスケジューリングが得意。</li>
+            <li>「4分音符」「次の小節の頭」など、音楽的な時間指定が可能。</li>
+            <li>豊富なシンセサイザーやエフェクトを内蔵。</li>
+            <li>譜面データと音楽の厳密な同期を容易に実現。</li>
+          </ul>
+
+          <h3>こんな場合に最適</h3>
+          <p>
+            BPMが変化する楽曲や、シーケンサーのように正確なタイミングで多数のイベントを発生させたい音ゲーに最適です。
+          </p>
+
+          <h3>再生時間の取得コード</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code><span class="code-comment">// Tone.jsをインポート</span>
+<span class="code-keyword">import</span> * <span class="code-keyword">as</span> Tone <span class="code-keyword">from</span> <span class="code-string">'tone'</span>;
+
+<span class="code-keyword">const</span> <span class="code-variable">player</span> = <span class="code-keyword">new</span> <span class="code-variable">Tone</span>.<span class="code-function">Player</span>(<span class="code-string">"music.mp3"</span>).<span class="code-function">toDestination</span>();
+
+<span class="code-comment">// ユーザー操作をきっかけにオーディオを開始</span>
+<span class="code-keyword">async function</span> <span class="code-function">startAudio</span>() {
+  <span class="code-keyword">await</span> <span class="code-variable">Tone</span>.<span class="code-function">start</span>();
+  <span class="code-keyword">await</span> <span class="code-variable">Tone</span>.<span class="code-function">loaded</span>();
+  <span class="code-comment">// Transportを再生するとPlayerも再生される</span>
+  <span class="code-variable">player</span>.<span class="code-function">sync</span>().<span class="code-function">start</span>(0);
+  <span class="code-variable">Tone</span>.<span class="code-variable">Transport</span>.<span class="code-function">start</span>();
+  <span class="code-function">update</span>();
+}
+<span class="code-comment">// 例: ボタンクリックで開始</span>
+<span class="code-variable">document</span>.<span class="code-variable">body</span>.<span class="code-function">addEventListener</span>(<span class="code-string">'click'</span>, <span class="code-variable">startAudio</span>, { <span class="code-variable">once</span>: <span class="code-keyword">true</span> });
+
+<span class="code-keyword">function</span> <span class="code-function">update</span>() {
+  <span class="code-comment">// Transport.secondsで再生時間を取得</span>
+  <span class="code-keyword">const</span> <span class="code-variable">currentTime</span> = <span class="code-variable">Tone</span>.<span class="code-variable">Transport</span>.<span class="code-variable">seconds</span>;
+  <span class="code-variable">console</span>.<span class="code-function">log</span>(<span class="code-string">`現在の再生時間: </span><span class="code-variable">${currentTime.toFixed(3)}</span><span class="code-string"> 秒`</span>);
+  <span class="code-function">requestAnimationFrame</span>(<span class="code-variable">update</span>);
+}
+</code></pre>
+          </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="card">
+          <h2>ライブラリ比較表</h2>
+          <div class="overflow-x-auto">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>項目</th>
+                  <th>Howler.js</th>
+                  <th>Web Audio API</th>
+                  <th>Tone.js</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>手軽さ</strong></td>
+                  <td class="good">非常に簡単</td>
+                  <td class="expert">複雑</td>
+                  <td class="normal">やや複雑</td>
+                </tr>
+                <tr>
+                  <td><strong>タイミング精度</strong></td>
+                  <td class="good">高精度</td>
+                  <td class="check">最高精度</td>
+                  <td class="check">最高精度</td>
+                </tr>
+                <tr>
+                  <td><strong>音楽的同期</strong></td>
+                  <td class="normal">手動実装</td>
+                  <td class="expert">手動実装</td>
+                  <td class="check">非常に得意</td>
+                </tr>
+                <tr>
+                  <td><strong>機能性</strong></td>
+                  <td class="good">十分</td>
+                  <td class="check">非常に高い</td>
+                  <td class="check">音楽に特化</td>
+                </tr>
+                <tr>
+                  <td><strong>学習コスト</strong></td>
+                  <td class="good">低い</td>
+                  <td class="expert">高い</td>
+                  <td class="normal">中程度</td>
+                </tr>
+                <tr>
+                  <td><strong>最適な用途</strong></td>
+                  <td>一般的な音ゲー、プロトタイプ</td>
+                  <td>プロレベルの精度が求められる音ゲー</td>
+                  <td>BPM同期が重要な音楽ゲーム</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      function copyCode(button) {
+        const pre = button.nextElementSibling;
+        const code = pre.querySelector("code");
+        const text = code.innerText;
+
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          button.innerText = "Copied!";
+        } catch (err) {
+          console.error("Failed to copy text: ", err);
+          button.innerText = "Error";
+        }
+        document.body.removeChild(textArea);
+
+        setTimeout(() => {
+          button.innerText = "Copy";
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>

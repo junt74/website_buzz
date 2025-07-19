@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>バカゲー三題噺フラッシュカード</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .title-font {
+        font-family: "Mochiy Pop One", sans-serif;
+      }
+      /* カードが裏返るアニメーション */
+      .card-inner {
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      .is-flipped .card-inner {
+        transform: rotateY(180deg);
+      }
+      .card-front,
+      .card-back {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .card-back {
+        transform: rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 flex flex-col items-center justify-center min-h-screen p-4"
+  >
+    <div class="w-full max-w-4xl text-center">
+      <h1
+        class="text-3xl md:text-5xl font-bold mb-2 title-font text-indigo-600 dark:text-indigo-400"
+      >
+        バカゲー三題噺
+      </h1>
+      <p class="text-lg md:text-xl mb-8 text-gray-600 dark:text-gray-400">
+        ３つのお題から、最高のバカゲーを考えよう！
+      </p>
+
+      <!-- カードコンテナ -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10 perspective-[1000px]"
+      >
+        <!-- カード 1 -->
+        <div id="card1" class="card h-48 md:h-64">
+          <div class="card-inner relative w-full h-full">
+            <div
+              class="card-front absolute w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-4 border-2 border-indigo-200 dark:border-indigo-700"
+            >
+              <span
+                class="text-2xl md:text-3xl font-bold text-indigo-500 dark:text-indigo-300"
+                >？</span
+              >
+            </div>
+            <div
+              id="topic1"
+              class="card-back absolute w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-4 border-2 border-indigo-500 dark:border-indigo-400 text-2xl md:text-3xl font-bold"
+            ></div>
+          </div>
+        </div>
+        <!-- カード 2 -->
+        <div id="card2" class="card h-48 md:h-64">
+          <div class="card-inner relative w-full h-full">
+            <div
+              class="card-front absolute w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-4 border-2 border-teal-200 dark:border-teal-700"
+            >
+              <span
+                class="text-2xl md:text-3xl font-bold text-teal-500 dark:text-teal-300"
+                >？</span
+              >
+            </div>
+            <div
+              id="topic2"
+              class="card-back absolute w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-4 border-2 border-teal-500 dark:border-teal-400 text-2xl md:text-3xl font-bold"
+            ></div>
+          </div>
+        </div>
+        <!-- カード 3 -->
+        <div id="card3" class="card h-48 md:h-64">
+          <div class="card-inner relative w-full h-full">
+            <div
+              class="card-front absolute w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-4 border-2 border-rose-200 dark:border-rose-700"
+            >
+              <span
+                class="text-2xl md:text-3xl font-bold text-rose-500 dark:text-rose-300"
+                >？</span
+              >
+            </div>
+            <div
+              id="topic3"
+              class="card-back absolute w-full h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-4 border-2 border-rose-500 dark:border-rose-400 text-2xl md:text-3xl font-bold"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生成ボタン -->
+      <button
+        id="generateButton"
+        class="title-font text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-bold rounded-lg text-2xl px-12 py-4 transition-transform transform hover:scale-105 duration-300 ease-in-out shadow-lg"
+      >
+        お題を引く！
+      </button>
+    </div>
+
+    <script>
+      // --- DOM要素の取得 ---
+      const topic1Elem = document.getElementById("topic1");
+      const topic2Elem = document.getElementById("topic2");
+      const topic3Elem = document.getElementById("topic3");
+      const generateButton = document.getElementById("generateButton");
+      const cards = [
+        document.getElementById("card1"),
+        document.getElementById("card2"),
+        document.getElementById("card3"),
+      ];
+
+      // --- お題のリスト ---
+
+      // お題1: 「誰が・何が」
+      const list1 = [
+        "おじさん",
+        "ゴリラ",
+        "豆腐",
+        "赤ちゃん",
+        "イケメン",
+        "マッチョ",
+        "プリン",
+        "女子高生",
+        "首相",
+        "寿司",
+        "伝説の剣",
+        "ネコ",
+        "AI",
+        "幽霊",
+        "アイドル",
+        "サラリーマン",
+        "勇者",
+        "ゾンビ",
+        "忍者",
+        "力士",
+        "魔法少女",
+        "タピオカ",
+        "ドローン",
+        "柴犬",
+        "大仏",
+        "宇宙人",
+        "社長",
+        "ニワトリ",
+        "ピーマン",
+        "救世主",
+        "錬金術師",
+        "ヴァンパイア",
+        "狼男",
+        "スライム",
+        "妖精",
+        "探偵",
+        "怪盗",
+        "警察官",
+        "消防士",
+        "医者",
+        "看護師",
+        "教師",
+        "生徒",
+        "バンドマン",
+        "DJ",
+        "画家",
+        "作家",
+        "登山家",
+        "宇宙飛行士",
+        "パイロット",
+        "船長",
+        "海賊",
+        "王様",
+        "女王様",
+        "姫",
+        "王子",
+        "騎士",
+        "農家",
+        "漁師",
+        "職人",
+        "芸人",
+        "声優",
+        "VTuber",
+        "インフルエンサー",
+        "配達員",
+        "清掃員",
+        "警備員",
+        "弁護士",
+        "裁判官",
+        "政治家",
+        "秘書",
+        "主婦",
+        "フリーター",
+        "ニート",
+        "ラスボス",
+        "中ボス",
+        "ザコキャラ",
+        "村人A",
+        "転校生",
+        "留学生",
+        "帰国子女",
+        "委員長",
+        "不良",
+        "ヤンキー",
+        "ギャル",
+        "オタク",
+        "文豪",
+        "哲学者",
+        "科学者",
+        "発明家",
+        "冒険家",
+        "恐竜",
+        "マンモス",
+        "シーラカンス",
+        "深海魚",
+        "UMA",
+        "ツチノコ",
+        "雪男",
+        "河童",
+        "天狗",
+        "鬼",
+        "悪魔",
+        "天使",
+        "神",
+        "仏",
+        "ご当地キャラ",
+        "マスコット",
+        "ロボット",
+        "アンドロイド",
+        "サイボーグ",
+        "ぬいぐるみ",
+        "人形",
+        "石像",
+        "銅像",
+        "絵画",
+        "幽霊船",
+        "UFO",
+        "戦車",
+        "戦闘機",
+        "空母",
+        "ちいかわ",
+        "ハチワレ",
+        "おぱんちゅうさぎ",
+        "ずんだもん",
+        "猫ミームの猫",
+        "ひき肉です",
+        "サカバンバスピス",
+        "スイカゲームのスイカ",
+        "新しい学校のリーダーズ",
+        "ちょんまげ小僧",
+        "AI絵師",
+        "AIアイドル",
+        "生成AI",
+        "サイバートラック",
+        "Vision Proをつけた人",
+        "蛙化させた人",
+        "ギフター",
+        "推し活する人",
+        "切り抜き師",
+        "迷惑系配信者",
+        "タイパ重視のZ世代",
+        "アバター",
+        "テラフォーミング業者",
+        "サイバー義体技師",
+        "マインドアップローダー",
+      ];
+
+      // お題2: 「どうする」
+      const list2 = [
+        "爆走する",
+        "合体する",
+        "謝罪する",
+        "分身する",
+        "巨大化する",
+        "踊る",
+        "叫ぶ",
+        "転がる",
+        "壁ドンする",
+        "空を飛ぶ",
+        "プロポーズする",
+        "瞬間移動する",
+        "自撮りする",
+        "料理する",
+        "脱出する",
+        "増殖する",
+        "土下座する",
+        "歌う",
+        "告白する",
+        "変身する",
+        "説教する",
+        "ワープする",
+        "筋トレする",
+        "ラップする",
+        "寝坊する",
+        "覚醒する",
+        "暴走する",
+        "記憶喪失になる",
+        "タイムスリップする",
+        "宝くじに当たる",
+        "世界征服を企む",
+        "借金する",
+        "起業する",
+        "転職する",
+        "炎上する",
+        "バズる",
+        "デビューする",
+        "引退する",
+        "卒業する",
+        "入学する",
+        "喧嘩する",
+        "仲直りする",
+        "恋に落ちる",
+        "失恋する",
+        "結婚する",
+        "離婚する",
+        "家出する",
+        "旅に出る",
+        "修行する",
+        "悟りを開く",
+        "召喚する",
+        "召喚される",
+        "封印する",
+        "封印される",
+        "破壊する",
+        "創造する",
+        "監視する",
+        "尾行する",
+        "潜入する",
+        "捜査する",
+        "解決する",
+        "迷宮入りする",
+        "プレゼンする",
+        "交渉する",
+        "契約する",
+        "解約する",
+        "徹夜する",
+        "二日酔いになる",
+        "ダイエットする",
+        "リバウンドする",
+        "エゴサする",
+        "既読スルーする",
+        "パリピになる",
+        "陰キャになる",
+        "推し活する",
+        "沼にハマる",
+        "課金する",
+        "ガチャを引く",
+        "神引きする",
+        "爆死する",
+        "コスプレする",
+        "同人誌を作る",
+        "ライブ配信する",
+        "動画編集する",
+        "プログラミングする",
+        "ハッキングする",
+        "デバッグする",
+        "農業する",
+        "釣りをする",
+        "DIYする",
+        "掃除する",
+        "洗濯する",
+        "料理教室に通う",
+        "ジムに通う",
+        "英会話を習う",
+        "催眠術をかける",
+        "解読する",
+        "翻訳する",
+        "演説する",
+        "革命を起こす",
+        "立候補する",
+        "当選する",
+        "落選する",
+        "出馬する",
+        "デモ行進する",
+        "投げ銭する",
+        "サブスクする",
+        "Vlogを撮る",
+        "レスバする",
+        "論破する",
+        "切り抜き動画を作る",
+        "オンラインサロンを開く",
+        "クラウドファンディングする",
+        "メタバースにダイブする",
+        "サイバーウェアを埋め込む",
+        "マインドをアップロードする",
+        "テラフォーミングする",
+        "AIと融合する",
+        "遺伝子を編集する",
+        "ドローンレースする",
+        "インプラントをハックする",
+      ];
+
+      // お題3: 「どこで・どんな状況で」
+      const list3 = [
+        "満員電車で",
+        "宇宙空間で",
+        "結婚式で",
+        "無人島で",
+        "面接会場で",
+        "江戸時代に",
+        "100円ショップで",
+        "異世界転生",
+        "修羅場で",
+        "卒業式で",
+        "時速100kmで",
+        "SNSで炎上",
+        "世界の中心で",
+        "ラスボスの前で",
+        "海底で",
+        "体育館裏で",
+        "記者会見で",
+        "お化け屋敷で",
+        "オーディションで",
+        "絶体絶命",
+        "夢の中で",
+        "AIに支配された世界で",
+        "コンビニで",
+        "ライブ会場で",
+        "文化祭で",
+        "体育祭で",
+        "修学旅行で",
+        "合宿で",
+        "同窓会で",
+        "忘年会で",
+        "新年会で",
+        "花見で",
+        "夏祭りで",
+        "ハロウィンで",
+        "クリスマスに",
+        "大晦日に",
+        "正月に",
+        "バレンタインデーに",
+        "ホワイトデーに",
+        "エイプリルフールに",
+        "株主総会で",
+        "取締役会で",
+        "裁判所で",
+        "国会議事堂で",
+        "ホワイトハウスで",
+        "バッキンガム宮殿で",
+        "富士山の頂上で",
+        "エベレストの山頂で",
+        "マリアナ海溝の底で",
+        "サハラ砂漠の真ん中で",
+        "アマゾンの奥地で",
+        "北極点で",
+        "南極点で",
+        "月面で",
+        "火星で",
+        "ブラックホールの中で",
+        "パラレルワールドで",
+        "ゲームの世界で",
+        "VR空間で",
+        "メタバースで",
+        "電脳空間で",
+        "精神世界で",
+        "無重力空間で",
+        "時間停止した世界で",
+        "嵐の中で",
+        "吹雪の中で",
+        "砂漠の嵐の中で",
+        "停電中に",
+        "断水中に",
+        "Wi-Fiがない環境で",
+        "スマホの充電が1%の状態で",
+        "締め切り直前に",
+        "テスト開始1分前に",
+        "手術中に",
+        "取り調べ室で",
+        "牢屋の中で",
+        "銀行強盗の最中に",
+        "ゾンビが溢れる街で",
+        "怪獣が出現した都市で",
+        "魔法が使えない世界で",
+        "科学が禁止された国で",
+        "全員が同じ顔の世界で",
+        "言葉が通じない場所で",
+        "過去に",
+        "未来に",
+        "戦国時代に",
+        "恐竜時代に",
+        "氷河期に",
+        "学校の屋上で",
+        "図書館で",
+        "保健室で",
+        "職員室で",
+        "社長室で",
+        "給湯室で",
+        "秘密基地で",
+        "ダンジョンで",
+        "城で",
+        "廃墟で",
+        "聖地で",
+        "魔界で",
+        "天界で",
+        "食パンをくわえて曲がり角で",
+        "玉座の前で",
+        "レッドカーペットで",
+        "オンライン会議で",
+        "ライブ配信中に",
+        "eスポーツの大会で",
+        "タワマンの最上階で",
+        "オフ会で",
+        "撮影スタジオで",
+        "炎上中のSNSで",
+        "軌道エレベーターで",
+        "火星のコロニーで",
+        "海底都市で",
+        "シミュレーション世界で",
+        "AI統治下の国で",
+        "ポスト・アポカリプス世界で",
+        "脳内ネットワークで",
+        "サイバーパンクなメガシティで",
+        "データセンターの奥深くで",
+        "異星のジャングルで",
+      ];
+
+      // --- 関数定義 ---
+
+      /**
+       * 配列からランダムな要素を1つ返す
+       * @param {Array} arr - 対象の配列
+       * @returns {*} ランダムに選ばれた要素
+       */
+      function getRandomElement(arr) {
+        const index = Math.floor(Math.random() * arr.length);
+        return arr[index];
+      }
+
+      /**
+       * 新しいお題を生成して表示する
+       */
+      function generateTopics() {
+        // ボタンを一時的に無効化
+        generateButton.disabled = true;
+        generateButton.textContent = "考え中...";
+        generateButton.classList.add("opacity-50", "cursor-not-allowed");
+
+        // カードを裏返す（もし表なら）
+        cards.forEach((card) => {
+          if (card.classList.contains("is-flipped")) {
+            card.classList.remove("is-flipped");
+          }
+        });
+
+        // 少し待ってから新しいお題を設定して表に向ける
+        setTimeout(() => {
+          // 新しいお題をセット
+          topic1Elem.textContent = getRandomElement(list1);
+          topic2Elem.textContent = getRandomElement(list2);
+          topic3Elem.textContent = getRandomElement(list3);
+
+          // カードを一枚ずつ時間差で表に向ける
+          cards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add("is-flipped");
+            }, index * 200); // 0ms, 200ms, 400ms の遅延
+          });
+
+          // ボタンを有効化
+          setTimeout(() => {
+            generateButton.disabled = false;
+            generateButton.textContent = "もう一回！";
+            generateButton.classList.remove("opacity-50", "cursor-not-allowed");
+          }, cards.length * 200);
+        }, 600); // カードが裏返るアニメーション時間
+      }
+
+      // --- イベントリスナー ---
+      generateButton.addEventListener("click", generateTopics);
+
+      // --- 初期化 ---
+      // ページ読み込み時にカードの裏に初期テキストを設定しておく
+      topic1Elem.textContent = "ボタンを";
+      topic2Elem.textContent = "押して";
+      topic3Elem.textContent = "スタート";
+      // 読み込み完了後、自動で最初のカードをめくる
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          cards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add("is-flipped");
+            }, index * 200);
+          });
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

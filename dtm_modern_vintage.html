@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Vintage - 音楽制作ブループリント</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- Base Styles --- */
+      body {
+        font-family: "Inter", "Noto Sans JP", sans-serif;
+        background-color: #111827; /* Tailwind gray-900 */
+        color: #e5e7eb; /* Tailwind gray-200 */
+      }
+
+      /* --- Custom Fonts --- */
+      .font-orbitron {
+        font-family: "Orbitron", sans-serif;
+      }
+
+      /* --- VST Plugin Tag Styling --- */
+      .vst-tag {
+        background-color: #374151; /* Tailwind gray-700 */
+        color: #a5b4fc; /* Tailwind indigo-300 */
+        padding: 3px 10px;
+        border-radius: 9999px; /* Pill shape */
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin: 2px 3px;
+        border: 1px solid #4338ca; /* Tailwind indigo-700 */
+        white-space: nowrap;
+        transition: all 0.2s ease-in-out;
+      }
+      .vst-tag:hover {
+        background-color: #4f46e5; /* Tailwind indigo-600 */
+        color: #fff;
+      }
+
+      /* --- Card Styling --- */
+      .card {
+        background-color: #1f2937; /* Tailwind gray-800 */
+        border: 1px solid #374151; /* Tailwind gray-700 */
+        transition: all 0.3s ease;
+        height: 100%;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.2),
+          0 4px 6px -2px rgba(251, 191, 36, 0.1);
+        border-color: #fbbf24; /* Tailwind amber-400 */
+      }
+
+      /* --- Section Title Styling --- */
+      .section-title {
+        font-family: "Noto Sans JP", sans-serif;
+        font-weight: 700;
+        color: #93c5fd; /* Tailwind blue-300 */
+        border-left: 4px solid #60a5fa; /* Tailwind blue-400 */
+        padding-left: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      /* --- Breakdown Title Styling --- */
+      .breakdown-title {
+        color: #6ee7b7; /* Tailwind green-300 */
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+      <!-- Header -->
+      <header class="text-center mb-12 md:mb-16">
+        <h1
+          class="font-orbitron text-4xl md:text-6xl font-bold text-white mb-2"
+        >
+          Modern <span class="text-amber-400">Vintage</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300">
+          サウンディングはヴィンテージに、文法はモダンに。
+        </p>
+      </header>
+
+      <!-- Intro -->
+      <div class="max-w-4xl mx-auto text-center mb-16 px-4">
+        <p class="text-gray-300 leading-relaxed">
+          「モダンヴィンテージ」のコンセプトに基づき、お持ちのVSTリストを最大限に活用するアイデアをご提案します。各時代の象徴的なサウンドを、現代的な作曲・アレンジ手法で再構築するためのブループリントです。
+        </p>
+      </div>
+
+      <!-- Proposals Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Card 1: Future Funk / Vaporwave -->
+        <div class="card rounded-xl p-6 shadow-lg flex flex-col">
+          <h2
+            class="font-orbitron text-2xl md:text-3xl font-bold text-violet-300 mb-6"
+          >
+            Future Funk / Vaporwave 🚀
+          </h2>
+
+          <div class="mb-6">
+            <h3 class="section-title text-xl">コンセプト</h3>
+            <p class="text-gray-400">
+              80年代シティポップやディスコの高揚感を、現代のビートメイキングで再構築。クリアかつローファイな質感が共存する、洗練されたダンスミュージック。
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="section-title text-xl">インスピレーション</h3>
+            <ul class="list-disc list-inside text-gray-400 space-y-1">
+              <li>
+                <strong>アーティスト:</strong> Daft Punk, Justice, Yung Bae
+              </li>
+              <li>
+                <strong>名曲要素:</strong>
+                山下達郎の疾走感、角松敏生のきらびやかさ、Daft
+                Punkの強烈なフック。
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="section-title text-xl">サウンド構築のヒント</h3>
+            <div class="space-y-4">
+              <div>
+                <h4 class="breakdown-title">ドラム</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">IconDrum</span>や<span class="vst-tag"
+                    >DMX</span
+                  >の骨太サウンドを<span class="vst-tag">TAL-Drum</span
+                  >等で調整。<span class="vst-tag">XO</span
+                  >でモダンなキックを重ね、<span class="vst-tag"
+                    >bx_Townhouse</span
+                  >で一体感を出し<span class="vst-tag">RX950</span
+                  >で質感を加える。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">ベース</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">TAL BassLine 101</span
+                  >でファンキーなフレーズを作り、<span class="vst-tag">FM8</span
+                  >のパーカッシブなベースを重ねてアタックを強調。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">コード / パッド</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">U-NO-LX</span>のアルペジオや<span
+                    class="vst-tag"
+                    >Dreamsynth</span
+                  >のパッドが主役。<span class="vst-tag">JURA Chorus</span
+                  >は必須。<span class="vst-tag">ValhallaVintageVerb</span
+                  >でドリーミーな空間を。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">メロディ / フック</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">M1</span>のピアノや<span class="vst-tag"
+                    >Emulation II+</span
+                  >のブラスを<span class="vst-tag">TAL Sampler</span
+                  >でチョップ。<span class="vst-tag">Effectrix</span>や<span
+                    class="vst-tag"
+                    >ShaperBox</span
+                  >でグリッチを加えモダンに。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Cyberpunk Synthwave -->
+        <div class="card rounded-xl p-6 shadow-lg flex flex-col">
+          <h2
+            class="font-orbitron text-2xl md:text-3xl font-bold text-cyan-300 mb-6"
+          >
+            Cyberpunk Synthwave 🌃
+          </h2>
+
+          <div class="mb-6">
+            <h3 class="section-title text-xl">コンセプト</h3>
+            <p class="text-gray-400">
+              『ブレードランナー』のような退廃的で美しいSFの世界観を音楽で表現。壮大なアナログシンセと攻撃的なEDMベースを融合させる。
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="section-title text-xl">インスピレーション</h3>
+            <ul class="list-disc list-inside text-gray-400 space-y-1">
+              <li>
+                <strong>アーティスト:</strong> Com Truise, Kavinsky, Perturbator
+              </li>
+              <li>
+                <strong>名曲要素:</strong>
+                Vangelisの美しいリード、Kavinskyのクールなドライヴ感、J.
+                Carpenterのミニマルな反復。
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="section-title text-xl">サウンド構築のヒント</h3>
+            <div class="space-y-4">
+              <div>
+                <h4 class="breakdown-title">ドラム</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">Drumazon 2</span>の力強いドラムに<span
+                    class="vst-tag"
+                    >DMX</span
+                  >のクラップを重ねる。強めのゲートリバーブ(<span
+                    class="vst-tag"
+                    >ValhallaVintageVerb</span
+                  >)と<span class="vst-tag">Smasher</span>でアグレッシブに。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">ベース</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">TAL BassLine 101</span
+                  >でシーケンスを作り、<span class="vst-tag">Serum</span>や<span
+                    class="vst-tag"
+                    >Massive</span
+                  >の凶暴なベースをインサート。<span class="vst-tag"
+                    >Disperser</span
+                  >で低域をスマッシュ。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">コード / パッド</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">GX-80</span>の壮大なブラスや<span
+                    class="vst-tag"
+                    >Polymode</span
+                  >のパッドが核。<span class="vst-tag">Super VHS</span>や<span
+                    class="vst-tag"
+                    >RC-20</span
+                  >でピッチを揺らしレトロフューチャー感を演出。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">メロディ / リード</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">GX-80</span>や<span class="vst-tag"
+                    >PolyMAX</span
+                  >の太いリードに<span class="vst-tag">Echorec</span
+                  >の幻想的なディレイをかける。<span class="vst-tag"
+                    >ShaperBox</span
+                  >でサウンドを動的に変化させる。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Lo-Fi Hip Hop x Chiptune Dream -->
+        <div class="card rounded-xl p-6 shadow-lg flex flex-col">
+          <h2
+            class="font-orbitron text-2xl md:text-3xl font-bold text-amber-300 mb-6"
+          >
+            Lo-Fi x Chiptune 🎮
+          </h2>
+
+          <div class="mb-6">
+            <h3 class="section-title text-xl">コンセプト</h3>
+            <p class="text-gray-400">
+              J
+              DillaやNujabesの温かい質感に、8bit/16bitゲームのノスタルジックなメロディを融合。チルで遊び心のあるビート。
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="section-title text-xl">インスピレーション</h3>
+            <ul class="list-disc list-inside text-gray-400 space-y-1">
+              <li>
+                <strong>アーティスト:</strong> Knxwledge, Flughand, anamanaguchi
+              </li>
+              <li>
+                <strong>名曲要素:</strong> Nujabesのループ感、J
+                Dillaのよれたビート、ゲーム音楽のメロディアスな響き。
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="section-title text-xl">サウンド構築のヒント</h3>
+            <div class="space-y-4">
+              <div>
+                <h4 class="breakdown-title">ドラム</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">RX1200</span>や<span class="vst-tag"
+                    >TAL Sampler</span
+                  >でジャズの質感を再現。<span class="vst-tag">Life</span
+                  >や<span class="vst-tag">XO</span
+                  >で有機的なパーカッションを追加。<span class="vst-tag"
+                    >HalfTime</span
+                  >でよれたビートに。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">ベース</h4>
+                <p class="text-gray-400">
+                  生ベースのサンプルを<span class="vst-tag">Amigo Sampler</span
+                  >で演奏。<span class="vst-tag">miniBit</span>や<span
+                    class="vst-tag"
+                    >Chipsynth MD</span
+                  >のシンプルなベースを重ねてゲーム感をプラス。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">コード / パッド</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">FEM-RODO</span>のエレピを<span
+                    class="vst-tag"
+                    >RC-20</span
+                  >や<span class="vst-tag">TAIP</span>で汚す。<span
+                    class="vst-tag"
+                    >Chipsynth SFC</span
+                  >のローファイなパッドを薄く重ねて浮遊感を。
+                </p>
+              </div>
+              <div>
+                <h4 class="breakdown-title">メロディ / SE</h4>
+                <p class="text-gray-400">
+                  <span class="vst-tag">Chipsynth MD</span>や<span
+                    class="vst-tag"
+                    >miniBit</span
+                  >でキャッチーなメロディを作成。<span class="vst-tag"
+                    >GameVerb</span
+                  >や<span class="vst-tag">Effectrix</span
+                  >で遊び心を加える。<span class="vst-tag">Synthesizer V</span
+                  >の歌声も面白い。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center mt-16">
+        <p class="text-gray-500">
+          これらのアイデアを自由に組み合わせて、あなただけのサウンドを創造してください。
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>インタラクティブ・バイラル・プレイブック</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Chosen Palette: Digital Creator's Calm -->
+    <!-- Application Structure Plan: A multi-section, single-page dashboard design. The structure flows from high-level strategy to specific actions: 1) A 'Dashboard' for an overview, 2) An 'Interactive Trend Explorer' to connect the 'why' (trends) with the 'what' (ideas), 3) An 'Interactive Idea Matrix' with a bubble chart and filters to explore the 10 project ideas dynamically, and 4) An 'Execution Playbook' for actionable steps. This task-oriented flow (Understand -> Explore -> Plan) is more intuitive and engaging for a creator than the original report's linear chapter structure. -->
+    <!-- Visualization & Content Choices: Report Table -> Goal: Compare/Explore 10 ideas -> Viz: Interactive Bubble Chart (Chart.js) + Filterable Cards (HTML/CSS/JS). Justification: A bubble chart visualizes multiple dimensions (e.g., viral potential, content type) simultaneously, offering richer insight than a static table. Cross-filtering between the chart and cards enhances exploration. Report List (Trends) -> Goal: Organize/Relate -> Viz: Interactive Cards (HTML/CSS/JS). Justification: Connects abstract trends directly to concrete project ideas, revealing relationships. Report List (Launch Plan) -> Goal: Show Process -> Viz: CSS Timeline. Justification: Visually represents the sequence of actions more effectively than a list. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+      body {
+        font-family: "Inter", "Noto Sans JP", sans-serif;
+        background-color: #f8f7f4;
+        color: #2c3333;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 350px;
+        max-height: 50vh;
+      }
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 450px;
+        }
+      }
+      .nav-link {
+        transition: all 0.3s ease;
+      }
+      .nav-link.active {
+        background-color: #a8a29e;
+        color: #ffffff;
+      }
+      .idea-card {
+        transition: all 0.3s ease;
+        transform: scale(1);
+      }
+      .idea-card.highlight {
+        box-shadow: 0 0 15px rgba(226, 135, 67, 0.7);
+        transform: scale(1.03);
+      }
+      .trend-card.active {
+        background-color: #e28743;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <h1 class="text-2xl font-bold text-gray-800">
+            インタラクティブ・バイラル・プレイブック
+          </h1>
+          <nav class="hidden md:flex space-x-2 bg-stone-200 p-1 rounded-lg">
+            <a
+              href="#trends"
+              class="nav-link px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-stone-300"
+              >トレンド分析</a
+            >
+            <a
+              href="#ideas"
+              class="nav-link px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-stone-300"
+              >企画アイデア</a
+            >
+            <a
+              href="#playbook"
+              class="nav-link px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-stone-300"
+              >実行戦略</a
+            >
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <section id="intro" class="text-center mb-16">
+        <h2 class="text-4xl font-bold mb-4">
+          市場を席巻するコンテンツ制作ガイド
+        </h2>
+        <p class="max-w-3xl mx-auto text-lg text-gray-600">
+          このプレイブックは、あなたのスキルと最新トレンドを掛け合わせ、バズるコンテンツを生み出すための戦略的ダッシュボードです。各セクションをインタラクティブに探求し、次のヒット作のヒントを見つけましょう。
+        </p>
+      </section>
+
+      <div class="space-y-20">
+        <section id="trends">
+          <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold">1. バイラル・トレンド分析</h2>
+            <p class="mt-2 text-md text-gray-600">
+              成功の鍵は、時代の空気を読むことから始まります。ここでは現在の主要な5つのトレンドを分析します。<br />カードをクリックして詳細と、関連する企画アイデアを確認してください。
+            </p>
+          </div>
+
+          <div
+            id="trends-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"
+          ></div>
+
+          <div
+            id="trend-details-container"
+            class="bg-white p-6 rounded-2xl shadow-lg min-h-[200px] transition-all duration-500 ease-in-out"
+          >
+            <div
+              id="trend-details-content"
+              class="text-center text-gray-500 py-10"
+            >
+              <p>👆 上のトレンドを選択して詳細を表示</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="ideas">
+          <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold">2. 企画アイデア・マトリクス</h2>
+            <p class="mt-2 text-md text-gray-600">
+              分析したトレンドとあなたのスキルを基にした10の企画案です。チャートやフィルターを操作して、あなたに最適な企画を見つけましょう。<br />チャートのバブルや企画カードをクリックすると、詳細情報が表示されます。
+            </p>
+          </div>
+
+          <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg mb-8">
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+              <button
+                data-filter="all"
+                class="filter-btn bg-stone-600 text-white px-4 py-2 rounded-full text-sm font-medium"
+              >
+                全表示
+              </button>
+              <button
+                data-filter="game"
+                class="filter-btn bg-stone-200 text-stone-800 px-4 py-2 rounded-full text-sm font-medium"
+              >
+                ゲーム
+              </button>
+              <button
+                data-filter="video"
+                class="filter-btn bg-stone-200 text-stone-800 px-4 py-2 rounded-full text-sm font-medium"
+              >
+                AIソング動画
+              </button>
+            </div>
+            <div class="chart-container">
+              <canvas id="ideasChart"></canvas>
+            </div>
+          </div>
+
+          <div
+            id="ideas-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          ></div>
+        </section>
+
+        <section id="playbook">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold">
+              3. プロデューサーズ・プレイブック
+            </h2>
+            <p class="mt-2 text-md text-gray-600">
+              アイデアを現実に変えるための具体的な実行計画です。ローンチ戦略から制作スケジュールまで、成功へのロードマップを提示します。
+            </p>
+          </div>
+
+          <div class="space-y-16">
+            <div id="launch-sequence">
+              <h3 class="text-2xl font-bold text-center mb-8">
+                マルチプラットフォーム・ローンチシーケンス
+              </h3>
+              <div class="relative">
+                <div
+                  class="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-stone-300 hidden md:block"
+                ></div>
+                <div
+                  id="launch-steps-container"
+                  class="space-y-12 md:space-y-0"
+                ></div>
+              </div>
+            </div>
+
+            <div id="psychology">
+              <h3 class="text-2xl font-bold text-center mb-8">
+                共有される「バカゲー」の心理学
+              </h3>
+              <div
+                id="psychology-cards-container"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              ></div>
+            </div>
+
+            <div id="schedule">
+              <h3 class="text-2xl font-bold text-center mb-8">
+                AI駆動ソロスタジオの週次スケジュール (1日2時間)
+              </h3>
+              <div class="bg-white p-6 rounded-2xl shadow-lg overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th
+                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
+                      >
+                        時間帯
+                      </th>
+                      <th
+                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
+                      >
+                        月・水
+                      </th>
+                      <th
+                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
+                      >
+                        火・木
+                      </th>
+                      <th
+                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
+                      >
+                        金
+                      </th>
+                      <th
+                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
+                      >
+                        毎日
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="bg-stone-800 text-white mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+        <p>&copy; 2025 Interactive Viral Playbook. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const DB = {
+          trends: [
+            {
+              id: 1,
+              name: "「不条理な日常」メタ",
+              description:
+                "日常的な活動を、不条理な物理演算やホラーで転換させるトレンド。VTuberやゲーム実況者との相性が抜群で、リアクション動画を通じてバイラルループを生み出しやすい。開発目標は「面白いクリップを生成するゲーム」を作ること。",
+              icon: "🤸",
+            },
+            {
+              id: 2,
+              name: "プレイアブル・ミーム",
+              description:
+                "流行中のミームやバイラル音源を基に、シンプルなマイクロゲームを迅速に開発・リリースするトレンド。スピードと文化的な関連性が命。ミームの認知度を借りて即座に興味を引き、コミュニティ内でシェアされる。",
+              icon: "밈",
+            },
+            {
+              id: 3,
+              name: "AI駆動の風刺エンジン",
+              description:
+                "SunoやMidJourneyを駆使し、平凡または不条理なテーマで高品質なコンテンツを制作するトレンド。プロフェッショナルな出来栄えと低俗なテーマのギャップが、強烈なコメディ効果を生み、共有されやすくなる。",
+              icon: "🤖",
+            },
+            {
+              id: 4,
+              name: "ノスタルジア・リミックス",
+              description:
+                "過去の有名な楽曲を現代的なEDMにリミックスし、レトロテーマのビジュアルと組み合わせるトレンド。ノスタルジアの強力な感情的引力を活用し、複数のプラットフォームで相互プロモーション可能なコンテンツエコシステムを構築できる。",
+              icon: "📼",
+            },
+            {
+              id: 5,
+              name: "「チル」の破壊",
+              description:
+                "巨大トレンドである「Lo-fi / チルホップ」の美学を逆手に取り、予期せぬユーモアやホラー、高エネルギーなEDMを注入するトレンド。人気ジャンルのフォーマットを乗っ取ることで、本来リーチできない巨大なオーディエンスにコンテンツを届けられる。",
+              icon: "💥",
+            },
+          ],
+          ideas: [
+            {
+              id: 1,
+              trendId: 3,
+              type: "video",
+              title: "エビ揉めマスター EDM",
+              summary:
+                "ネットミーム「エビ揉め」をテーマにしたAIソング動画。超本格的なEDMとサイバーパンク風の高品質な映像で、テーマとのギャップを狙う。",
+              target: "EDMファン、ネットミーム好き",
+              buzz: "高品質な無駄遣いというツッコミどころ満載のギャップ。",
+              viral: 9,
+              effort: 3,
+            },
+            {
+              id: 2,
+              trendId: 2,
+              type: "game",
+              title: "強風オールバック・ランナー",
+              summary:
+                "バイラルソング「強風オールバック」の世界観を再現した横スクロールランゲーム。BGMはもちろん同曲のEDMリミックス。",
+              target: "元ネタファン、カジュアルゲーマー",
+              buzz: "プレイアブル・ミームとしての即時的な共感と、面白い失敗シーンのSNSでの共有。",
+              viral: 8,
+              effort: 7,
+            },
+            {
+              id: 3,
+              trendId: 1,
+              type: "game",
+              title: "深夜コンビニ・ホラー",
+              summary:
+                "「深夜にコンビニへ行く」という日常的なタスクにホラーを融合させた短編ゲーム。平凡な日常が徐々に侵食される恐怖を演出。",
+              target: "ホラーゲーム実況者、VTuber",
+              buzz: "実況者の絶叫リアクションを引き出しやすく、切り抜き動画からの拡散が期待できる。",
+              viral: 7,
+              effort: 8,
+            },
+            {
+              id: 4,
+              trendId: 5,
+              type: "video",
+              title: "AI Ghibli-Fi Beats to Relax/Rage to",
+              summary:
+                "Lo-Fi Girlのパロディ動画。チルなLo-Fiが突然ハードなEDMに変わり、ジブリ風キャラが発狂する。",
+              target: "Lo-Fiリスナー、アニメファン",
+              buzz: "予測を裏切る「ベイト・アンド・スイッチ」の驚きと笑いがシェアを促進。",
+              viral: 9,
+              effort: 4,
+            },
+            {
+              id: 5,
+              trendId: 4,
+              type: "video",
+              title: "90年代アニソン・リバイバル",
+              summary:
+                "懐かしのアニソンを現代的なフェスティバルEDMにリミックスするシリーズ。ピクセルアート風の映像と組み合わせる。",
+              target: "30-40代アニメファン、EDM好き",
+              buzz: "ノスタルジアと高揚感の組み合わせが強い感情的フックとなりバイラル化しやすい。",
+              viral: 8,
+              effort: 5,
+            },
+            {
+              id: 6,
+              trendId: 1,
+              type: "game",
+              title: "サラリーマン物理演算出社",
+              summary:
+                "『壺男』風の高難易度物理演算バカゲー。マウスでサラリーマンの関節を動かし、理不尽な障害を乗り越え出社を目指す。",
+              target: "ストリーマー、マゾゲーファン",
+              buzz: "壮大な失敗シーンがエンタメとなり、プレイヤーのフラストレーションが共有される。",
+              viral: 10,
+              effort: 10,
+            },
+            {
+              id: 7,
+              trendId: 3,
+              type: "game",
+              title: "絶対押すなボタン・シミュレーター",
+              summary:
+                "ボタンを押すと予測不能でシュールなEDMビデオが流れるゲーム。押さずに待つと別のイベントも。",
+              target: "考察好き、シュールネタ好き",
+              buzz: "次に何が起こるか分からない好奇心と、出現した珍しい動画のSNSでの報告。",
+              viral: 7,
+              effort: 6,
+            },
+            {
+              id: 8,
+              trendId: 3,
+              type: "video",
+              title: "AI歌詞ジェネレーターEDM",
+              summary:
+                "無関係な単語からAIが生成したカオスな歌詞で、壮大なEDMソングを作る動画。",
+              target: "AI好き、実験音楽ファン",
+              buzz: "AIの暴走というエンタメ性。「AIに〇〇と歌わせたら神曲が生まれた」という鉄板ネタ。",
+              viral: 6,
+              effort: 2,
+            },
+            {
+              id: 9,
+              trendId: 2,
+              type: "game",
+              title: "タイピング・オブ・ザ・バカゲー",
+              summary:
+                "ネットスラングを高速でタイピングするゲーム。BGMはもちろん高速EDM。",
+              target: "タイピングゲーム好き、ネット文化好き",
+              buzz: "確立されたジャンルに内輪ネタを持ち込むことで特定のコミュニティに強く刺さる。",
+              viral: 6,
+              effort: 5,
+            },
+            {
+              id: 10,
+              trendId: 1,
+              type: "video",
+              title: "ソーセージ・レジェンド・アンセム",
+              summary:
+                "バカゲー『ソーセージレジェンド』の世界観で、荘厳なEDMアンセムを制作。英雄のように描かれるソーセージ達の映像を合わせる。",
+              target: "バカゲーファン、シュール好き",
+              buzz: "テーマの馬鹿馬鹿しさとクオリティの過剰な高さとの究極のミスマッチが笑いを誘う。",
+              viral: 8,
+              effort: 4,
+            },
+          ],
+          playbook: {
+            launch: [
+              {
+                week: 1,
+                title: "スパーク (Twitter)",
+                desc: "開発中の短いGIFやクリップを投稿し、初期反応を得て期待感を醸成。",
+                icon: "✨",
+              },
+              {
+                week: 2,
+                title: "ファイア (YouTubeショート)",
+                desc: "最も面白い部分を凝縮した30-60秒の「完璧なクリップ」を公開し、バイラルエンジンに点火。",
+                icon: "🔥",
+              },
+              {
+                week: 3,
+                title: "デスティネーション (UnityRoom/YouTube)",
+                desc: "ゲーム本体やフル尺楽曲をローンチ。これまでの投稿が最終目的地への誘導路となる。",
+                icon: "🎯",
+              },
+              {
+                week: 4,
+                title: "エコー (反響)",
+                desc: "セルフプレイ動画やストリーマーのクリップ共有で会話を持続させ、コンテンツの寿命を延ばす。",
+                icon: "📣",
+              },
+            ],
+            psychology: [
+              {
+                title: "共感可能なフラストレーション",
+                desc: "簡単そうに見えて実は難しい操作性が、視聴者の共感を呼ぶ。",
+                icon: "😩",
+              },
+              {
+                title: "シャーデンフロイデとスペクタクル",
+                desc: "他人の滑稽な失敗は最高のエンタメ。物理演算で壮大な失敗を演出する。",
+                icon: "😂",
+              },
+              {
+                title: "「自分ならできる」という挑戦意欲",
+                desc: "「これなら自分の方がうまい」と思わせることが、視聴者をプレイヤーに変える。",
+                icon: "💪",
+              },
+              {
+                title: "内輪ネタと文化的資本",
+                desc: "ミームベースのゲームを共有することは、そのカルチャーの一員であることの証明になる。",
+                icon: "🤫",
+              },
+            ],
+            schedule: [
+              {
+                time: "1時間目",
+                mon_wed: "Suno AIで音楽のアイデア出しと洗練",
+                tue_thu: "MidJourneyでビジュアルアセットをバッチ生成",
+                fri: "コンテンツのパッケージ化と投稿予約",
+                daily: "コアプロジェクト開発 (Unityなど)",
+              },
+              {
+                time: "2時間目",
+                mon_wed: "コアプロジェクト開発 (Unityなど)",
+                tue_thu: "コアプロジェクト開発 (Unityなど)",
+                fri: "コアプロジェクト開発 (Unityなど)",
+                daily: "",
+              },
+            ],
+          },
+        };
+
+        let ideasChart;
+        let activeFilter = "all";
+        let activeTrend = null;
+
+        const trendsGrid = document.getElementById("trends-grid");
+        const trendDetailsContent = document.getElementById(
+          "trend-details-content"
+        );
+        const ideasGrid = document.getElementById("ideas-grid");
+        const filterBtns = document.querySelectorAll(".filter-btn");
+
+        function init() {
+          renderTrends();
+          renderIdeas();
+          renderPlaybook();
+          setupEventListeners();
+          createChart();
+          setupNavObserver();
+        }
+
+        function renderTrends() {
+          trendsGrid.innerHTML = DB.trends
+            .map(
+              (trend) => `
+                <button data-id="${trend.id}" class="trend-card text-left p-4 rounded-lg shadow-md bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <span class="text-2xl mr-2">${trend.icon}</span>
+                    <span class="font-bold text-lg">${trend.name}</span>
+                </button>
+            `
+            )
+            .join("");
+        }
+
+        function renderIdeas(filter = "all", highlightId = null) {
+          const filteredIdeas = DB.ideas.filter(
+            (idea) => filter === "all" || idea.type === filter
+          );
+          ideasGrid.innerHTML = filteredIdeas
+            .map(
+              (idea) => `
+                <div id="idea-card-${idea.id}" data-id="${
+                idea.id
+              }" class="idea-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                             <h4 class="font-bold text-xl mb-2">${
+                               idea.title
+                             }</h4>
+                             <span class="text-xs font-semibold ${
+                               idea.type === "game"
+                                 ? "bg-blue-100 text-blue-800"
+                                 : "bg-purple-100 text-purple-800"
+                             } px-2 py-1 rounded-full">${
+                idea.type === "game" ? "ゲーム" : "AI動画"
+              }</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">${
+                          idea.summary
+                        }</p>
+                        <div class="text-xs space-y-2">
+                            <p><strong class="text-stone-700">ターゲット：</strong> ${
+                              idea.target
+                            }</p>
+                            <p><strong class="text-stone-700">バズるポイント：</strong> ${
+                              idea.buzz
+                            }</p>
+                        </div>
+                    </div>
+                </div>
+            `
+            )
+            .join("");
+
+          document
+            .querySelectorAll(".idea-card")
+            .forEach((card) =>
+              card.addEventListener("click", () =>
+                highlightIdea(card.dataset.id)
+              )
+            );
+          if (highlightId) {
+            highlightIdea(highlightId);
+          }
+        }
+
+        function renderPlaybook() {
+          const launchStepsContainer = document.getElementById(
+            "launch-steps-container"
+          );
+          launchStepsContainer.innerHTML = DB.playbook.launch
+            .map(
+              (step, index) => `
+                <div class="flex items-center md:justify-center md:space-x-8 ${
+                  index % 2 !== 0
+                    ? "md:flex-row-reverse md:space-x-reverse"
+                    : ""
+                }">
+                    <div class="w-full md:w-5/12 bg-white p-6 rounded-2xl shadow-lg">
+                        <p class="text-2xl font-bold text-orange-500 mb-2">${
+                          step.icon
+                        } 第${step.week}週</p>
+                        <h4 class="text-xl font-bold mb-2">${step.title}</h4>
+                        <p class="text-gray-600">${step.desc}</p>
+                    </div>
+                    <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-700 text-white rounded-full flex items-center justify-center font-bold hidden md:flex">${
+                      step.week
+                    }</div>
+                </div>
+            `
+            )
+            .join("");
+
+          const psychologyContainer = document.getElementById(
+            "psychology-cards-container"
+          );
+          psychologyContainer.innerHTML = DB.playbook.psychology
+            .map(
+              (p) => `
+                 <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
+                    <div class="text-4xl mb-4">${p.icon}</div>
+                    <h4 class="font-bold text-lg mb-2">${p.title}</h4>
+                    <p class="text-gray-600 text-sm">${p.desc}</p>
+                </div>
+            `
+            )
+            .join("");
+
+          const scheduleBody = document.getElementById("schedule-body");
+          scheduleBody.innerHTML = DB.playbook.schedule
+            .map(
+              (s) => `
+                <tr class="border-b border-stone-200">
+                    <td class="py-3 px-4 font-bold text-stone-800">${
+                      s.time
+                    }</td>
+                    <td class="py-3 px-4">${s.mon_wed}</td>
+                    <td class="py-3 px-4">${s.tue_thu}</td>
+                    <td class="py-3 px-4">${s.fri}</td>
+                    <td class="py-3 px-4 text-sm text-gray-500">${
+                      s.daily || "ー"
+                    }</td>
+                </tr>
+            `
+            )
+            .join("");
+        }
+
+        function showTrendDetails(trendId) {
+          const trend = DB.trends.find((t) => t.id == trendId);
+          const relatedIdeas = DB.ideas.filter(
+            (idea) => idea.trendId == trendId
+          );
+
+          trendDetailsContent.innerHTML = `
+                <h3 class="text-2xl font-bold mb-3">${trend.icon} ${
+            trend.name
+          }</h3>
+                <p class="text-gray-700 mb-6">${trend.description}</p>
+                <h4 class="font-semibold text-lg mb-3">関連する企画アイデア：</h4>
+                <div class="flex flex-wrap justify-center gap-2">
+                    ${
+                      relatedIdeas.length > 0
+                        ? relatedIdeas
+                            .map(
+                              (idea) =>
+                                `<button data-idea-id="${idea.id}" class="related-idea-btn bg-stone-200 text-stone-800 px-3 py-1 rounded-full text-sm hover:bg-stone-300 transition">${idea.title}</button>`
+                            )
+                            .join("")
+                        : '<p class="text-sm text-gray-500">関連する企画はありません。</p>'
+                    }
+                </div>
+            `;
+
+          document.querySelectorAll(".related-idea-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const ideaId = btn.dataset.ideaId;
+              const ideaElement = document.getElementById(
+                `idea-card-${ideaId}`
+              );
+              if (ideaElement) {
+                ideaElement.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+                highlightIdea(ideaId);
+              }
+            });
+          });
+
+          document.querySelectorAll(".trend-card").forEach((card) => {
+            card.classList.toggle("active", card.dataset.id == trendId);
+          });
+        }
+
+        function highlightIdea(ideaId) {
+          document
+            .querySelectorAll(".idea-card")
+            .forEach((card) => card.classList.remove("highlight"));
+          const cardElement = document.getElementById(`idea-card-${ideaId}`);
+          if (cardElement) {
+            cardElement.classList.add("highlight");
+            setTimeout(() => cardElement.classList.remove("highlight"), 2500);
+          }
+        }
+
+        function createChart() {
+          const ctx = document.getElementById("ideasChart").getContext("2d");
+          const datasets = [
+            {
+              label: "ゲーム",
+              data: DB.ideas
+                .filter((i) => i.type === "game")
+                .map((i) => ({
+                  x: i.effort,
+                  y: i.viral,
+                  r: i.viral * 2,
+                  id: i.id,
+                  title: i.title,
+                })),
+              backgroundColor: "rgba(59, 130, 246, 0.6)",
+            },
+            {
+              label: "AIソング動画",
+              data: DB.ideas
+                .filter((i) => i.type === "video")
+                .map((i) => ({
+                  x: i.effort,
+                  y: i.viral,
+                  r: i.viral * 2,
+                  id: i.id,
+                  title: i.title,
+                })),
+              backgroundColor: "rgba(168, 85, 247, 0.6)",
+            },
+          ];
+
+          ideasChart = new Chart(ctx, {
+            type: "bubble",
+            data: { datasets: datasets },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              onClick: (e, elements) => {
+                if (elements.length > 0) {
+                  const element = elements[0];
+                  const { id } = element.element.$context.raw;
+                  const cardElement = document.getElementById(
+                    `idea-card-${id}`
+                  );
+                  cardElement.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                  highlightIdea(id);
+                }
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "制作期間・工数 (→ 高)",
+                    font: { weight: "bold" },
+                  },
+                  min: 0,
+                  max: 11,
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "バズるポテンシャル (→ 高)",
+                    font: { weight: "bold" },
+                  },
+                  min: 5,
+                  max: 11,
+                },
+              },
+              plugins: {
+                legend: { position: "top" },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const raw = context.raw;
+                      return `${raw.title} (ポテンシャル: ${raw.y})`;
+                    },
+                  },
+                },
+              },
+            },
+          });
+        }
+
+        function updateChart(filter) {
+          if (!ideasChart) return;
+          ideasChart.data.datasets.forEach((dataset) => {
+            if (filter === "all") {
+              dataset.hidden = false;
+            } else if (filter === "game") {
+              dataset.hidden = dataset.label !== "ゲーム";
+            } else if (filter === "video") {
+              dataset.hidden = dataset.label !== "AIソング動画";
+            }
+          });
+          ideasChart.update();
+        }
+
+        function setupEventListeners() {
+          trendsGrid.addEventListener("click", (e) => {
+            const card = e.target.closest(".trend-card");
+            if (card) {
+              activeTrend = card.dataset.id;
+              showTrendDetails(activeTrend);
+            }
+          });
+
+          filterBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              activeFilter = btn.dataset.filter;
+              filterBtns.forEach((b) => {
+                b.classList.remove("bg-stone-600", "text-white");
+                b.classList.add("bg-stone-200", "text-stone-800");
+              });
+              btn.classList.add("bg-stone-600", "text-white");
+              btn.classList.remove("bg-stone-200", "text-stone-800");
+
+              renderIdeas(activeFilter);
+              updateChart(activeFilter);
+            });
+          });
+        }
+
+        function setupNavObserver() {
+          const navLinks = document.querySelectorAll(".nav-link");
+          const sections = document.querySelectorAll("main section");
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  navLinks.forEach((link) => {
+                    link.classList.toggle(
+                      "active",
+                      link.getAttribute("href").substring(1) === entry.target.id
+                    );
+                  });
+                }
+              });
+            },
+            { rootMargin: "-50% 0px -50% 0px" }
+          );
+
+          sections.forEach((section) => observer.observe(section));
+        }
+
+        init();
+      });
+    </script>
+  </body>
+</html>
