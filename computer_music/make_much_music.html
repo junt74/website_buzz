@@ -11,62 +11,68 @@
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
       body {
         font-family: "Inter", sans-serif;
-        background-color: #f0f4f8; /* 淡いグレーの背景 */
+        background-color: #111827; /* Dark background */
+        color: #e5e7eb; /* Light text */
       }
       /* カスタムスクロールバー（任意） */
       ::-webkit-scrollbar {
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #e2e8f0;
-        border-radius: 10px;
+        background: #1f2937; /* Dark track */
       }
       ::-webkit-scrollbar-thumb {
-        background: #94a3b8;
+        background: #4b5563; /* Dark thumb */
         border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #64748b;
+        background: #6b7280; /* Dark thumb hover */
       }
       /* Bootstrap adjustments */
+      .bg-main-container {
+        background-color: #1f2937;
+      }
+      .bg-step-card {
+        background-color: #374151;
+      }
       .bg-indigo-50 {
-        background-color: #eef2ff;
+        background-color: rgba(96, 165, 250, 0.1);
       }
       .text-indigo-700 {
-        color: #4338ca;
+        color: #93c5fd;
       }
       .text-indigo-800 {
-        color: #3730a3;
+        color: #e5e7eb;
       }
       .border-indigo-200 {
-        border-color: #c7d2fe;
+        border-color: #374151 !important;
       }
       .border-indigo-600 {
-        border-color: #4f46e5;
+        border-color: #60a5fa !important;
       }
       .bg-purple-50 {
-        background-color: #f5f3ff;
+        background-color: rgba(167, 139, 250, 0.1);
       }
       .text-purple-700 {
-        color: #7e22ce;
+        color: #c4b5fd;
       }
       .border-purple-200 {
-        border-color: #ddd6fe;
+        border-color: #374151 !important;
       }
       .bg-green-50 {
-        background-color: #ecfdf5;
+        background-color: rgba(45, 212, 191, 0.1);
       }
       .text-green-700 {
-        color: #047857;
+        color: #5eead4;
       }
       .border-green-200 {
-        border-color: #a7f3d0;
+        border-color: #374151 !important;
       }
       .text-gray-600 {
-        color: #4b5563;
+        color: #9ca3af;
       }
       .text-gray-800 {
-        color: #1f2937;
+        color: #e5e7eb;
       }
       .text-gray-500 {
         color: #6b7280;
@@ -92,7 +98,7 @@
     </style>
   </head>
   <body class="d-flex align-items-center justify-content-center min-vh-100 p-3 p-sm-4 p-lg-5">
-    <div class="bg-white shadow-2xl rounded-3xl p-4 p-sm-5 p-lg-5 mx-auto my-4 border-top border-5 border-indigo-600 col-12 col-lg-10 col-xl-8">
+    <div class="bg-main-container shadow-2xl rounded-3xl p-4 p-sm-5 p-lg-5 mx-auto my-4 border-top border-5 border-indigo-600 col-12 col-lg-10 col-xl-8">
       <!-- Main Title -->
       <h1 class="fs-1 fw-bold text-center text-indigo-800 mb-4 lh-sm">
         DTM楽曲量産のためのワークフロー
@@ -110,7 +116,7 @@
           </h2>
           <div class="d-flex flex-column gap-4">
             <!-- Step 1 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">📝</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
@@ -122,7 +128,7 @@
               </div>
             </div>
             <!-- Step 2 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">✍️</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
@@ -134,7 +140,7 @@
               </div>
             </div>
             <!-- Step 3 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">🎤</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
@@ -155,7 +161,7 @@
           </h2>
           <div class="d-flex flex-column gap-4">
             <!-- Step 4 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">✂️</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
@@ -167,7 +173,7 @@
               </div>
             </div>
             <!-- Step 5 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">🎙️</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
@@ -180,7 +186,7 @@
               </div>
             </div>
             <!-- Step 6 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">🎶</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
@@ -202,7 +208,7 @@
           </h2>
           <div class="d-flex flex-column gap-4">
             <!-- Step 7 -->
-            <div class="d-flex bg-white p-3 rounded-xl shadow-md border border-1">
+            <div class="d-flex bg-step-card p-3 rounded-xl shadow-md border border-1">
               <div class="fs-2 me-3 mt-1">🎛️</div>
               <div>
                 <h3 class="fs-4 fw-medium text-gray-800 mb-1">
