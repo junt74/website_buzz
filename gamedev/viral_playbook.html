@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html lang="ja" class="scroll-smooth">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>インタラクティブ・バイラル・プレイブック</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Chosen Palette: Digital Creator's Calm -->
     <!-- Application Structure Plan: A multi-section, single-page dashboard design. The structure flows from high-level strategy to specific actions: 1) A 'Dashboard' for an overview, 2) An 'Interactive Trend Explorer' to connect the 'why' (trends) with the 'what' (ideas), 3) An 'Interactive Idea Matrix' with a bubble chart and filters to explore the 10 project ideas dynamically, and 4) An 'Execution Playbook' for actionable steps. This task-oriented flow (Understand -> Explore -> Plan) is more intuitive and engaging for a creator than the original report's linear chapter structure. -->
     <!-- Visualization & Content Choices: Report Table -> Goal: Compare/Explore 10 ideas -> Viz: Interactive Bubble Chart (Chart.js) + Filterable Cards (HTML/CSS/JS). Justification: A bubble chart visualizes multiple dimensions (e.g., viral potential, content type) simultaneously, offering richer insight than a static table. Cross-filtering between the chart and cards enhances exploration. Report List (Trends) -> Goal: Organize/Relate -> Viz: Interactive Cards (HTML/CSS/JS). Justification: Connects abstract trends directly to concrete project ideas, revealing relationships. Report List (Launch Plan) -> Goal: Show Process -> Viz: CSS Timeline. Justification: Visually represents the sequence of actions more effectively than a list. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <style>
       body {
         font-family: "Inter", "Noto Sans JP", sans-serif;
-        background-color: #f8f7f4;
-        color: #2c3333;
+        background-color: #111827; /* Dark background like index.html */
+        color: #f8f9fa; /* Lighter text color for better visibility */
+      }
+      .font-orbitron {
+        font-family: "Orbitron", sans-serif;
+      }
+      .section-title {
+        font-family: "Noto Sans JP", sans-serif;
+        font-weight: 700;
+        color: #93c5fd; /* Blue-300 */
+        border-left: 4px solid #60a5fa; /* Blue-400 */
+        padding-left: 0.75rem;
+        margin-bottom: 1rem;
       }
       .chart-container {
         position: relative;
@@ -38,117 +48,111 @@
           height: 450px;
         }
       }
-      .nav-link {
+      .trend-card {
+        background-color: #1f2937; /* gray-800 */
+        border: 1px solid #4b5563; /* gray-600 for better contrast */
         transition: all 0.3s ease;
+        cursor: pointer;
+        color: #f8f9fa; /* Lighter text for better visibility */
       }
-      .nav-link.active {
-        background-color: #a8a29e;
-        color: #ffffff;
-      }
-      .idea-card {
-        transition: all 0.3s ease;
-        transform: scale(1);
-      }
-      .idea-card.highlight {
-        box-shadow: 0 0 15px rgba(226, 135, 67, 0.7);
-        transform: scale(1.03);
+      .trend-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 10px -2px rgba(96, 165, 250, 0.3);
+        border-color: #60a5fa; /* blue-400 */
       }
       .trend-card.active {
-        background-color: #e28743;
+        background-color: #3b82f6; /* blue-500 */
         color: white;
+        border-color: #60a5fa; /* blue-400 */
+      }
+      .idea-card {
+        background-color: #1f2937; /* gray-800 */
+        border: 1px solid #4b5563; /* gray-600 for better contrast */
+        transition: all 0.3s ease;
+        cursor: pointer;
+        color: #f8f9fa; /* Lighter text */
+      }
+      .idea-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 10px -2px rgba(96, 165, 250, 0.3);
+        border-color: #60a5fa; /* blue-400 */
+      }
+      .idea-card.highlight {
+        box-shadow: 0 0 15px rgba(96, 165, 250, 0.7);
+        border-color: #60a5fa; /* blue-400 */
+        transform: scale(1.03);
       }
     </style>
   </head>
-  <body class="antialiased">
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-          <h1 class="text-2xl font-bold text-gray-800">
+  <body>
+    <header class="bg-dark bg-opacity-75 sticky-top shadow-sm">
+      <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="fs-4 fw-bold text-white mb-0">
             インタラクティブ・バイラル・プレイブック
           </h1>
-          <nav class="hidden md:flex space-x-2 bg-stone-200 p-1 rounded-lg">
-            <a
-              href="#trends"
-              class="nav-link px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-stone-300"
-              >トレンド分析</a
-            >
-            <a
-              href="#ideas"
-              class="nav-link px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-stone-300"
-              >企画アイデア</a
-            >
-            <a
-              href="#playbook"
-              class="nav-link px-3 py-1 rounded-md text-sm font-medium text-gray-700 hover:bg-stone-300"
-              >実行戦略</a
-            >
+          <nav class="d-none d-md-flex bg-dark bg-opacity-50 p-1 rounded-3">
+            <a href="#trends" class="btn btn-sm text-light me-2">トレンド分析</a>
+            <a href="#ideas" class="btn btn-sm text-light me-2">企画アイデア</a>
+            <a href="#playbook" class="btn btn-sm text-light">実行戦略</a>
           </nav>
         </div>
       </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-      <section id="intro" class="text-center mb-16">
-        <h2 class="text-4xl font-bold mb-4">
+    <main class="container py-4 py-md-5">
+      <section id="intro" class="text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3 text-info">
           市場を席巻するコンテンツ制作ガイド
         </h2>
-        <p class="max-w-3xl mx-auto text-lg text-gray-600">
+        <p class="mx-auto text-light" style="max-width: 800px;">
           このプレイブックは、あなたのスキルと最新トレンドを掛け合わせ、バズるコンテンツを生み出すための戦略的ダッシュボードです。各セクションをインタラクティブに探求し、次のヒット作のヒントを見つけましょう。
         </p>
       </section>
 
-      <div class="space-y-20">
-        <section id="trends">
-          <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold">1. バイラル・トレンド分析</h2>
-            <p class="mt-2 text-md text-gray-600">
+      <div class="mb-5 mb-md-6">
+        <section id="trends" class="mb-5">
+          <div class="text-center mb-4">
+            <h2 class="section-title fs-2">1. バイラル・トレンド分析</h2>
+            <p class="text-light">
               成功の鍵は、時代の空気を読むことから始まります。ここでは現在の主要な5つのトレンドを分析します。<br />カードをクリックして詳細と、関連する企画アイデアを確認してください。
             </p>
           </div>
 
-          <div
-            id="trends-grid"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"
-          ></div>
+          <div id="trends-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4 mb-4"></div>
 
-          <div
-            id="trend-details-container"
-            class="bg-white p-6 rounded-2xl shadow-lg min-h-[200px] transition-all duration-500 ease-in-out"
-          >
-            <div
-              id="trend-details-content"
-              class="text-center text-gray-500 py-10"
-            >
+          <div id="trend-details-container" class="card bg-dark p-4 rounded-3 shadow min-vh-25">
+            <div id="trend-details-content" class="text-center text-light py-4">
               <p>👆 上のトレンドを選択して詳細を表示</p>
             </div>
           </div>
         </section>
 
-        <section id="ideas">
-          <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold">2. 企画アイデア・マトリクス</h2>
-            <p class="mt-2 text-md text-gray-600">
+        <section id="ideas" class="mb-5">
+          <div class="text-center mb-4">
+            <h2 class="section-title fs-2">2. 企画アイデア・マトリクス</h2>
+            <p class="text-light">
               分析したトレンドとあなたのスキルを基にした10の企画案です。チャートやフィルターを操作して、あなたに最適な企画を見つけましょう。<br />チャートのバブルや企画カードをクリックすると、詳細情報が表示されます。
             </p>
           </div>
 
-          <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg mb-8">
-            <div class="flex flex-wrap justify-center gap-2 mb-6">
+          <div class="card bg-dark p-4 rounded-3 shadow mb-4">
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
               <button
                 data-filter="all"
-                class="filter-btn bg-stone-600 text-white px-4 py-2 rounded-full text-sm font-medium"
+                class="filter-btn btn btn-primary btn-sm px-3 py-1 rounded-pill"
               >
                 全表示
               </button>
               <button
                 data-filter="game"
-                class="filter-btn bg-stone-200 text-stone-800 px-4 py-2 rounded-full text-sm font-medium"
+                class="filter-btn btn btn-outline-info btn-sm px-3 py-1 rounded-pill"
               >
                 ゲーム
               </button>
               <button
                 data-filter="video"
-                class="filter-btn bg-stone-200 text-stone-800 px-4 py-2 rounded-full text-sm font-medium"
+                class="filter-btn btn btn-outline-info btn-sm px-3 py-1 rounded-pill"
               >
                 AIソング動画
               </button>
@@ -158,81 +162,53 @@
             </div>
           </div>
 
-          <div
-            id="ideas-grid"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          ></div>
+          <div id="ideas-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
         </section>
 
         <section id="playbook">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold">
+          <div class="text-center mb-4">
+            <h2 class="section-title fs-2">
               3. プロデューサーズ・プレイブック
             </h2>
-            <p class="mt-2 text-md text-gray-600">
+            <p class="text-light">
               アイデアを現実に変えるための具体的な実行計画です。ローンチ戦略から制作スケジュールまで、成功へのロードマップを提示します。
             </p>
           </div>
 
-          <div class="space-y-16">
-            <div id="launch-sequence">
-              <h3 class="text-2xl font-bold text-center mb-8">
+          <div class="mb-5">
+            <div id="launch-sequence" class="mb-5">
+              <h3 class="text-info fw-bold text-center mb-4">
                 マルチプラットフォーム・ローンチシーケンス
               </h3>
-              <div class="relative">
+              <div class="position-relative">
                 <div
-                  class="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-stone-300 hidden md:block"
+                  class="position-absolute top-0 start-50 translate-middle-x d-none d-md-block"
+                  style="width: 2px; height: 100%; background-color: #374151;"
                 ></div>
-                <div
-                  id="launch-steps-container"
-                  class="space-y-12 md:space-y-0"
-                ></div>
+                <div id="launch-steps-container" class="d-flex flex-column gap-4"></div>
               </div>
             </div>
 
-            <div id="psychology">
-              <h3 class="text-2xl font-bold text-center mb-8">
+            <div id="psychology" class="mb-5">
+              <h3 class="text-info fw-bold text-center mb-4">
                 共有される「バカゲー」の心理学
               </h3>
-              <div
-                id="psychology-cards-container"
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-              ></div>
+              <div id="psychology-cards-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div>
             </div>
 
             <div id="schedule">
-              <h3 class="text-2xl font-bold text-center mb-8">
+              <h3 class="text-info fw-bold text-center mb-4">
                 AI駆動ソロスタジオの週次スケジュール (1日2時間)
               </h3>
-              <div class="bg-white p-6 rounded-2xl shadow-lg overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+              <div class="card bg-dark p-4 rounded-3 shadow overflow-auto">
+                <table class="table table-dark table-bordered">
                   <thead>
                     <tr>
-                      <th
-                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
-                      >
-                        時間帯
-                      </th>
-                      <th
-                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
-                      >
-                        月・水
-                      </th>
-                      <th
-                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
-                      >
-                        火・木
-                      </th>
-                      <th
-                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
-                      >
-                        金
-                      </th>
-                      <th
-                        class="py-3 px-4 bg-stone-100 font-bold uppercase text-sm text-stone-600 border-b border-stone-200"
-                      >
-                        毎日
-                      </th>
+                      <th class="text-info">時間帯</th>
+                      <th class="text-info">月・水</th>
+                      <th class="text-info">火・木</th>
+                      <th class="text-info">金</th>
+                      <th class="text-info">毎日</th>
                     </tr>
                   </thead>
                   <tbody id="schedule-body"></tbody>
@@ -244,12 +220,15 @@
       </div>
     </main>
 
-    <footer class="bg-stone-800 text-white mt-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
-        <p>&copy; 2025 Interactive Viral Playbook. All rights reserved.</p>
+    <footer class="bg-dark text-light py-3 mt-5">
+      <div class="container text-center">
+        <p class="mb-0">&copy; 2025 Interactive Viral Playbook. All rights reserved.</p>
       </div>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const DB = {
@@ -497,17 +476,21 @@
           renderPlaybook();
           setupEventListeners();
           createChart();
-          setupNavObserver();
+          setupScrollSpy();
         }
 
         function renderTrends() {
           trendsGrid.innerHTML = DB.trends
             .map(
               (trend) => `
-                <button data-id="${trend.id}" class="trend-card text-left p-4 rounded-lg shadow-md bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <span class="text-2xl mr-2">${trend.icon}</span>
-                    <span class="font-bold text-lg">${trend.name}</span>
-                </button>
+                <div class="col">
+                  <button data-id="${trend.id}" class="trend-card card w-100 h-100 text-start p-3 rounded-3 border-0">
+                    <div class="d-flex align-items-center">
+                      <span class="fs-3 me-2">${trend.icon}</span>
+                      <span class="fw-bold">${trend.name}</span>
+                    </div>
+                  </button>
+                </div>
             `
             )
             .join("");
@@ -520,34 +503,22 @@
           ideasGrid.innerHTML = filteredIdeas
             .map(
               (idea) => `
-                <div id="idea-card-${idea.id}" data-id="${
-                idea.id
-              }" class="idea-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start">
-                             <h4 class="font-bold text-xl mb-2">${
-                               idea.title
-                             }</h4>
-                             <span class="text-xs font-semibold ${
-                               idea.type === "game"
-                                 ? "bg-blue-100 text-blue-800"
-                                 : "bg-purple-100 text-purple-800"
-                             } px-2 py-1 rounded-full">${
-                idea.type === "game" ? "ゲーム" : "AI動画"
-              }</span>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4">${
-                          idea.summary
-                        }</p>
-                        <div class="text-xs space-y-2">
-                            <p><strong class="text-stone-700">ターゲット：</strong> ${
-                              idea.target
-                            }</p>
-                            <p><strong class="text-stone-700">バズるポイント：</strong> ${
-                              idea.buzz
-                            }</p>
-                        </div>
+                <div class="col">
+                  <div id="idea-card-${idea.id}" data-id="${idea.id}" class="idea-card card h-100 bg-dark rounded-3 border-0">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h4 class="card-title fw-bold text-info">${idea.title}</h4>
+                        <span class="badge ${idea.type === "game" ? "bg-primary" : "bg-purple"} rounded-pill">${
+                        idea.type === "game" ? "ゲーム" : "AI動画"
+                      }</span>
+                      </div>
+                      <p class="card-text text-light small mb-3">${idea.summary}</p>
+                      <div class="small text-light">
+                        <p><strong class="text-info">ターゲット：</strong> ${idea.target}</p>
+                        <p><strong class="text-info">バズるポイント：</strong> ${idea.buzz}</p>
+                      </div>
                     </div>
+                  </div>
                 </div>
             `
             )
@@ -572,21 +543,17 @@
           launchStepsContainer.innerHTML = DB.playbook.launch
             .map(
               (step, index) => `
-                <div class="flex items-center md:justify-center md:space-x-8 ${
-                  index % 2 !== 0
-                    ? "md:flex-row-reverse md:space-x-reverse"
-                    : ""
-                }">
-                    <div class="w-full md:w-5/12 bg-white p-6 rounded-2xl shadow-lg">
-                        <p class="text-2xl font-bold text-orange-500 mb-2">${
-                          step.icon
-                        } 第${step.week}週</p>
-                        <h4 class="text-xl font-bold mb-2">${step.title}</h4>
-                        <p class="text-gray-600">${step.desc}</p>
+                <div class="row ${index % 2 !== 0 ? "justify-content-md-end" : ""} mb-4">
+                  <div class="col-12 col-md-5">
+                    <div class="card bg-dark p-4 rounded-3 border-0 shadow">
+                      <p class="fs-5 fw-bold text-primary mb-2">${step.icon} 第${step.week}週</p>
+                      <h4 class="fs-4 fw-bold text-info mb-2">${step.title}</h4>
+                      <p class="text-light">${step.desc}</p>
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-700 text-white rounded-full flex items-center justify-center font-bold hidden md:flex">${
-                      step.week
-                    }</div>
+                  </div>
+                  <div class="position-absolute top-50 start-50 translate-middle d-none d-md-flex justify-content-center align-items-center rounded-circle bg-primary text-white" style="width: 40px; height: 40px; z-index: 1;">
+                    ${step.week}
+                  </div>
                 </div>
             `
             )
@@ -598,10 +565,12 @@
           psychologyContainer.innerHTML = DB.playbook.psychology
             .map(
               (p) => `
-                 <div class="bg-white p-6 rounded-2xl shadow-lg text-center">
-                    <div class="text-4xl mb-4">${p.icon}</div>
-                    <h4 class="font-bold text-lg mb-2">${p.title}</h4>
-                    <p class="text-gray-600 text-sm">${p.desc}</p>
+                <div class="col">
+                  <div class="card bg-dark p-4 rounded-3 border-0 shadow text-center h-100">
+                    <div class="fs-1 mb-3">${p.icon}</div>
+                    <h4 class="fw-bold text-info mb-2">${p.title}</h4>
+                    <p class="text-light small">${p.desc}</p>
+                  </div>
                 </div>
             `
             )
@@ -611,16 +580,12 @@
           scheduleBody.innerHTML = DB.playbook.schedule
             .map(
               (s) => `
-                <tr class="border-b border-stone-200">
-                    <td class="py-3 px-4 font-bold text-stone-800">${
-                      s.time
-                    }</td>
-                    <td class="py-3 px-4">${s.mon_wed}</td>
-                    <td class="py-3 px-4">${s.tue_thu}</td>
-                    <td class="py-3 px-4">${s.fri}</td>
-                    <td class="py-3 px-4 text-sm text-gray-500">${
-                      s.daily || "ー"
-                    }</td>
+                <tr>
+                  <th class="fw-bold text-white">${s.time}</th>
+                  <td class="text-light">${s.mon_wed}</td>
+                  <td class="text-light">${s.tue_thu}</td>
+                  <td class="text-light">${s.fri}</td>
+                  <td class="text-light">${s.daily || "ー"}</td>
                 </tr>
             `
             )
@@ -634,21 +599,19 @@
           );
 
           trendDetailsContent.innerHTML = `
-                <h3 class="text-2xl font-bold mb-3">${trend.icon} ${
-            trend.name
-          }</h3>
-                <p class="text-gray-700 mb-6">${trend.description}</p>
-                <h4 class="font-semibold text-lg mb-3">関連する企画アイデア：</h4>
-                <div class="flex flex-wrap justify-center gap-2">
+                <h3 class="fs-3 fw-bold text-info mb-3">${trend.icon} ${trend.name}</h3>
+                <p class="text-white mb-4">${trend.description}</p>
+                <h4 class="fw-bold text-info mb-3">関連する企画アイデア：</h4>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
                     ${
                       relatedIdeas.length > 0
                         ? relatedIdeas
                             .map(
                               (idea) =>
-                                `<button data-idea-id="${idea.id}" class="related-idea-btn bg-stone-200 text-stone-800 px-3 py-1 rounded-full text-sm hover:bg-stone-300 transition">${idea.title}</button>`
+                                `<button data-idea-id="${idea.id}" class="related-idea-btn btn btn-outline-info btn-sm rounded-pill">${idea.title}</button>`
                             )
                             .join("")
-                        : '<p class="text-sm text-gray-500">関連する企画はありません。</p>'
+                        : '<p class="text-light small">関連する企画はありません。</p>'
                     }
                 </div>
             `;
@@ -687,6 +650,11 @@
 
         function createChart() {
           const ctx = document.getElementById("ideasChart").getContext("2d");
+          
+          // Set chart background to match dark theme
+          Chart.defaults.color = '#e5e7eb';
+          Chart.defaults.borderColor = '#374151';
+          
           const datasets = [
             {
               label: "ゲーム",
@@ -699,7 +667,7 @@
                   id: i.id,
                   title: i.title,
                 })),
-              backgroundColor: "rgba(59, 130, 246, 0.6)",
+              backgroundColor: "rgba(13, 110, 253, 0.6)", // Bootstrap primary color
             },
             {
               label: "AIソング動画",
@@ -712,7 +680,7 @@
                   id: i.id,
                   title: i.title,
                 })),
-              backgroundColor: "rgba(168, 85, 247, 0.6)",
+              backgroundColor: "rgba(111, 66, 193, 0.6)", // Bootstrap purple color
             },
           ];
 
@@ -798,11 +766,9 @@
             btn.addEventListener("click", () => {
               activeFilter = btn.dataset.filter;
               filterBtns.forEach((b) => {
-                b.classList.remove("bg-stone-600", "text-white");
-                b.classList.add("bg-stone-200", "text-stone-800");
+                b.classList.remove("btn-primary", "btn-outline-info");
+                b.classList.add(b.dataset.filter === activeFilter ? "btn-primary" : "btn-outline-info");
               });
-              btn.classList.add("bg-stone-600", "text-white");
-              btn.classList.remove("bg-stone-200", "text-stone-800");
 
               renderIdeas(activeFilter);
               updateChart(activeFilter);
@@ -810,27 +776,30 @@
           });
         }
 
-        function setupNavObserver() {
-          const navLinks = document.querySelectorAll(".nav-link");
-          const sections = document.querySelectorAll("main section");
-
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  navLinks.forEach((link) => {
-                    link.classList.toggle(
-                      "active",
-                      link.getAttribute("href").substring(1) === entry.target.id
-                    );
-                  });
-                }
-              });
-            },
-            { rootMargin: "-50% 0px -50% 0px" }
-          );
-
-          sections.forEach((section) => observer.observe(section));
+        function setupScrollSpy() {
+          const navLinks = document.querySelectorAll('header a[href^="#"]');
+          
+          // Activate Bootstrap's scrollspy
+          const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+            target: 'header nav',
+            offset: 100
+          });
+          
+          // Add smooth scrolling to all links
+          navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+              e.preventDefault();
+              let targetId = this.getAttribute('href');
+              let targetElement = document.querySelector(targetId);
+              
+              if (targetElement) {
+                window.scrollTo({
+                  top: targetElement.offsetTop - 80,
+                  behavior: 'smooth'
+                });
+              }
+            });
+          });
         }
 
         init();
