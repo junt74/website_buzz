@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>80年代ゲームミュージック DTM再現ガイド</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "VT323", monospace;
+        background-color: #0a0a0a;
+        color: #00ff41;
+        text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41;
+        background-image: linear-gradient(
+            rgba(0, 255, 65, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .crt-glow {
+        animation: crt-glow-anim 2s infinite alternate;
+      }
+      @keyframes crt-glow-anim {
+        from {
+          text-shadow: 0 0 3px #007f20, 0 0 6px #007f20;
+        }
+        to {
+          text-shadow: 0 0 5px #007f20, 0 0 10px #007f20;
+        }
+      }
+      .font-press-start {
+        font-family: "Press Start 2P", cursive;
+      }
+      .card {
+        background-color: rgba(0, 20, 0, 0.7);
+        border: 1px solid #007f20;
+        box-shadow: 0 0 10px rgba(0, 127, 32, 0.2) inset;
+      }
+      .card-title {
+        background-color: #00ff41;
+        color: #0a0a0a;
+        text-shadow: none;
+      }
+      /* Blinking cursor effect */
+      .cursor::after {
+        content: "_";
+        animation: blink 1s step-start infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .list-retro {
+        list-style-type: none;
+        padding-left: 1.5rem;
+      }
+      .list-retro li {
+        position: relative;
+        margin-bottom: 0.5rem;
+      }
+      .list-retro li::before {
+        content: ">";
+        position: absolute;
+        left: -1.5rem;
+        color: #00ff41;
+      }
+      .text-white {
+        color: white !important;
+      }
+      .text-yellow {
+        color: #ffff00 !important;
+      }
+      .border-green {
+        border: 2px solid #00ff41 !important;
+      }
+    </style>
+  </head>
+  <body class="p-3 p-md-5">
+    <div class="container">
+      <!-- Header -->
+      <header class="border-green p-4 mb-5 text-center">
+        <h1 class="font-press-start display-5 crt-glow cursor">
+          BEEP OS v2.1
+        </h1>
+        <p class="fs-4 mt-2">SYSTEM BOOTING... OK</p>
+        <p class="fs-4">LOADING MODULE: DTM_GUIDE.HTML</p>
+      </header>
+
+      <main>
+        <!-- Section 1: DTM Strategy -->
+        <section class="mb-5">
+          <h2 class="font-press-start fs-2 mb-4 text-center">
+            &gt; あの時代へのタイムスリップ DTM戦略
+          </h2>
+
+          <div class="d-flex flex-column gap-4">
+            <!-- 1.1 Sound Chips -->
+            <div class="card rounded">
+              <div class="card-body p-0">
+                <h3
+                  class="card-title font-press-start fs-5 p-2 m-0 mb-0 rounded-top"
+                >
+                  1. 音の心臓部：音源チップを理解する
+                </h3>
+                <div class="p-4 fs-5">
+                  <p>
+                    当時のサウンドは搭載されていた音源チップで決まります。以下の3つが中心です。
+                  </p>
+                  <div class="mb-3">
+                    <h4 class="fs-4 fw-bold text-white">
+                      A) FM音源 (Frequency Modulation)
+                    </h4>
+                    <p>
+                      きらびやかな金属音、分厚いブラス、独特なE.Piano/Bassが特徴。80年代アーケードサウンドの主役。
+                      <br />
+                      <span class="text-white fw-bold">代表チップ:</span>
+                      YM2151, YM2203 <br />
+                      <span class="text-white fw-bold">DTM音源:</span> Plogue
+                      chipsynth MD (有償), NI FM8 (有償),
+                      <span class="text-yellow">dexed (無償)</span>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <h4 class="fs-4 fw-bold text-white">
+                      B) PSG音源 (Programmable Sound Generator)
+                    </h4>
+                    <p>
+                      「ピコピコ」な矩形波や三角波が中心のシンプルで素朴なサウンド。効果音や補助パートに。
+                      <br />
+                      <span class="text-white fw-bold">代表チップ:</span>
+                      SN76489, AY-3-8910 <br />
+                      <span class="text-white fw-bold">DTM音源:</span> Magical
+                      8bit Plug 2 (無償), 各DAW標準シンセ
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <h4 class="fs-4 fw-bold text-white">
+                      C) PCM音源 (Pulse Code Modulation)
+                    </h4>
+                    <p>
+                      サンプリング音源。リアルなドラムやボイスに使用。メモリ制約から音質は粗いのが特徴。<br />
+                      <span class="text-white fw-bold">DTM再現:</span>
+                      現代のサンプルに<span class="text-yellow"
+                        >「ビットクラッシャー」</span
+                      >を適用。8bit/11025Hz等に劣化させると雰囲気が出ます。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.2 Sound Making Tips -->
+            <div class="card rounded">
+              <div class="card-body p-0">
+                <h3
+                  class="card-title font-press-start fs-5 p-2 m-0 mb-0 rounded-top"
+                >
+                  2. サウンドメイクのコツ：「制約」を愛する
+                </h3>
+                <div class="p-4 fs-5">
+                  <ul class="list-retro">
+                    <li>
+                      <span class="text-white fw-bold"
+                        >プリセットから始める:</span
+                      >
+                      FM音源の音作りは複雑。まずはプリセットを読み込み、パラメータを少しずつ変更して音の変化を体感するのが近道です。
+                    </li>
+                    <li>
+                      <span class="text-white fw-bold">同時発音数を意識:</span>
+                      当時のチップはFM8音+PSG3音など、同時に鳴らせる音数が限られていました。トラック数をあえて絞り、「隙間」を作ることでレトロな質感が生まれます。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.3 Composition Tips -->
+            <div class="card rounded">
+              <div class="card-body p-0">
+                <h3
+                  class="card-title font-press-start fs-5 p-2 m-0 mb-0 rounded-top"
+                >
+                  3. 作曲・編曲のコツ：「お約束」を取り入れる
+                </h3>
+                <div class="p-4 fs-5">
+                  <ul class="list-retro">
+                    <li>
+                      <span class="text-white fw-bold"
+                        >キャッチーなメロディ:</span
+                      >
+                      覚えやすく力強いメロディが楽曲の核となります。
+                    </li>
+                    <li>
+                      <span class="text-white fw-bold">高速アルペジオ:</span>
+                      和音をそのまま鳴らす代わりに、構成音を高速で順番に演奏する「アルペジオ」は当時の必須テクニックです。
+                    </li>
+                    <li>
+                      <span class="text-white fw-bold"
+                        >動き回るベースライン:</span
+                      >
+                      ルート音を弾くだけでなく、オクターブを上下したりメロディックなフレーズを入れたりしてグルーヴを生み出します。
+                    </li>
+                    <li>
+                      <span class="text-white fw-bold"
+                        >エフェクトは控えめに:</span
+                      >
+                      リバーブやディレイは使わないか、ごく短いものを。パン（左右の定位）を極端に振って広がりを出すのは効果的です。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Music List -->
+        <section>
+          <h2 class="font-press-start fs-2 mb-4 text-center">
+            &gt; 不朽の名曲たち：人気レトロゲーム音楽リスト
+          </h2>
+          <div class="card rounded">
+            <div class="card-body p-4 fs-5">
+              <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">スペースハリアー</h4>
+                  <p class="ps-4">MAIN THEME</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">アウトラン</h4>
+                  <p class="ps-4">MAGICAL SOUND SHOWER</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">アフターバーナーII</h4>
+                  <p class="ps-4">AFTER BURNER</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">ファンタジーゾーン</h4>
+                  <p class="ps-4">OPA-OPA!</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">
+                    グラディウス シリーズ
+                  </h4>
+                  <p class="ps-4">Challenger 1985</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">ダライアス</h4>
+                  <p class="ps-4">CAPTAIN NEO</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">悪魔城ドラキュラ</h4>
+                  <p class="ps-4">Vampire Killer</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">忍者龍剣伝</h4>
+                  <p class="ps-4">鮮烈のリュウ</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">イースII</h4>
+                  <p class="ps-4">TO MAKE THE END OF BATTLE</p>
+                </div>
+                <div class="col">
+                  <h4 class="fs-4 text-white fw-bold">
+                    ストリートファイターII
+                  </h4>
+                  <p class="ps-4">リュウのテーマ (Ryu's Theme)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="mt-5 text-center">
+        <p>END OF FILE. SYSTEM READY.</p>
+      </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
