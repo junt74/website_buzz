@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>インタラクティブ・バイラルゲーム戦略ガイド</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", "Noto Sans JP", sans-serif;
+        background-color: #111827; /* Dark background like index.html */
+        color: #e5e7eb; /* Light text color from index.html */
+      }
+      .nav-link {
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      .nav-link.active,
+      .nav-link:hover {
+        color: #60a5fa !important; /* Blue color from index.html */
+      }
+      .nav-link.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background-color: #60a5fa; /* Blue color from index.html */
+      }
+      .content-section {
+        display: none;
+      }
+      .content-section.active {
+        display: block;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 350px;
+        max-height: 400px;
+      }
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 400px;
+        }
+      }
+      .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      }
+      .risk-low {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .risk-medium {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .risk-high {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+      .risk-extreme {
+        background-color: #e5e7eb;
+        color: #1f2937;
+      }
+      .phase-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        padding: 0 1.5rem;
+      }
+      
+      .text-purple {
+        color: #60a5fa !important; /* Blue color instead of purple */
+      }
+      
+      /* Card style for dark theme */
+      .card {
+        background-color: #1f2937; /* Dark background for cards */
+        border-color: #374151;
+        color: #e5e7eb; /* Light text color from index.html */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-4 py-md-5">
+      <header class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-white mb-2">
+          プレイアブルミーム戦略ガイド
+        </h1>
+        <p class="fs-5 text-secondary">
+          バイラル化とVTuberエンゲージメントへのインタラクティブ設計図
+        </p>
+      </header>
+
+      <nav class="d-flex justify-content-center border-bottom border-2 pb-2 mb-5">
+        <button
+          data-target="home"
+          class="nav-link active btn bg-transparent border-0 px-3 py-2 fs-5 fw-medium text-secondary"
+        >
+          ホーム
+        </button>
+        <button
+          data-target="design"
+          class="nav-link btn bg-transparent border-0 px-3 py-2 fs-5 fw-medium text-secondary"
+        >
+          設計思想
+        </button>
+        <button
+          data-target="dev"
+          class="nav-link btn bg-transparent border-0 px-3 py-2 fs-5 fw-medium text-secondary"
+        >
+          開発＆ローンチ
+        </button>
+        <button
+          data-target="vtuber"
+          class="nav-link btn bg-transparent border-0 px-3 py-2 fs-5 fw-medium text-secondary"
+        >
+          VTuber戦略
+        </button>
+      </nav>
+
+      <main>
+        <!-- ホーム Section -->
+        <section id="home" class="content-section active">
+          <div class="text-center mb-5">
+            <h2 class="fs-1 fw-bold text-info mb-3">
+              目標達成へのロードマップ
+            </h2>
+            <p class="mx-auto text-secondary" style="max-width: 800px;">
+              このガイドは、「プレイアブルなミーム」を軸としたゲーム制作を通じて、<span
+                class="fw-bold text-purple"
+                >①バズる</span
+              >、<span class="fw-bold text-purple"
+                >②VTuberに遊んでもらう</span
+              >、<span class="fw-bold text-purple"
+                >③VTuberと対談する</span
+              >
+              という三つの目標を達成するための戦略的フレームワークです。各セクションを探索し、成功へのアクションプランを発見してください。
+            </p>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-3 g-4 text-center mb-5">
+            <div class="col">
+              <div class="card h-100 shadow-sm card-hover py-4 px-3">
+                <div class="fs-1 mb-3">🎯</div>
+                <h3 class="fs-4 fw-bold text-info mb-2">
+                  バズる (Virality)
+                </h3>
+                <p class="text-secondary">
+                  ゲームが爆発的に拡散され、広範な認知を獲得するための設計原則を探ります。
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 shadow-sm card-hover py-4 px-3">
+                <div class="fs-1 mb-3">🎮</div>
+                <h3 class="fs-4 fw-bold text-info mb-2">
+                  VTuberに遊んでもらう
+                </h3>
+                <p class="text-secondary">
+                  影響力のあるVTuberが自発的にプレイしたくなるようなアプローチと関係構築法を学びます。
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 shadow-sm card-hover py-4 px-3">
+                <div class="fs-1 mb-3">💬</div>
+                <h3 class="fs-4 fw-bold text-info mb-2">
+                  VTuberと対談する
+                </h3>
+                <p class="text-secondary">
+                  開発者自身がコミュニティで尊敬される存在となり、対等な対話を実現する道筋を示します。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-lg p-4 p-md-5">
+            <h3 class="fs-3 fw-bold text-center text-info mb-4">
+              統合アクションプラン：13ヶ月+のロードマップ
+            </h3>
+            <div class="position-relative">
+              <div
+                class="position-absolute top-0 start-50 translate-middle-x d-none d-md-block"
+                style="width: 2px; height: 100%; background-color: #dee2e6;"
+              ></div>
+              <div
+                id="roadmap-container"
+                class="d-flex flex-column gap-4 d-md-grid"
+              ></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 設計思想 Section -->
+        <section id="design" class="content-section">
+          <div class="text-center mb-5">
+            <h2 class="fs-1 fw-bold text-info mb-3">
+              設計思想：バイラル性の基盤
+            </h2>
+            <p class="mx-auto text-secondary" style="max-width: 800px;">
+              成功する「プレイアブルミーム」は、単なるネタゲーではありません。ここでは、視聴者にとって優れた「見世物」となり、共有したくなる体験を生み出すための核となるコンセプトとメカニクスを解説します。
+            </p>
+          </div>
+
+          <div class="row row-cols-1 row-cols-lg-2 g-4 align-items-center">
+            <div class="col">
+              <div class="card shadow-sm p-4">
+                <h3 class="fs-3 fw-bold text-info mb-3">
+                  バイラルDNAの比較分析
+                </h3>
+                <p class="text-secondary mb-4">
+                  近年ヒットしたゲームは、共通の特性を持っています。下のボタンでゲームを選択し、レーダーチャートでその特性のバランスを視覚的に比較してください。各ゲームがどのようにしてバイラル化したかのヒントが得られます。
+                </p>
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                  <button
+                    class="game-selector-btn btn btn-info btn-sm px-3 py-1 rounded-pill"
+                    data-game="suika"
+                  >
+                    スイカゲーム
+                  </button>
+                  <button
+                    class="game-selector-btn btn btn-outline-secondary btn-sm px-3 py-1 rounded-pill"
+                    data-game="gettingoverit"
+                  >
+                    Getting Over It
+                  </button>
+                  <button
+                    class="game-selector-btn btn btn-outline-secondary btn-sm px-3 py-1 rounded-pill"
+                    data-game="onlyup"
+                  >
+                    Only Up!
+                  </button>
+                </div>
+                <div class="chart-container">
+                  <canvas id="viralDnaChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="d-flex flex-column gap-4">
+                <div class="card shadow-sm p-4 card-hover">
+                  <h4 class="fs-5 fw-bold text-info mb-2">
+                    🎮 「プレイアブルなミーム」の定義
+                  </h4>
+                  <p class="text-secondary">
+                    ゲームのコアメカニクスそのものが、共有可能な感情体験（ユーモア、理不尽さ、達成感）を内包するゲームのこと。特定の画像ではなく、<span
+                      class="fw-bold"
+                      >普遍的なコンセプトをゲーム化する</span
+                    >ことで、著作権リスクを回避し、寿命を延ばすことができます。
+                  </p>
+                </div>
+                <div class="card shadow-sm p-4 card-hover">
+                  <h4 class="fs-5 fw-bold text-info mb-2">
+                    ✨ 「配信映え」の原則
+                  </h4>
+                  <p class="text-secondary">
+                    見て面白いゲームは、<span class="fw-bold"
+                      >「分かりやすさ」「劇的な瞬間」「プレイヤーの表現の舞台」</span
+                    >の3要素を備えています。開発者は「このメカニクスは、ストリーマーにどんなパフォーマンスをさせ、視聴者にどんな感情を提供するか？」を常に問うべきです。
+                  </p>
+                </div>
+                <div class="card shadow-sm p-4 card-hover">
+                  <h4 class="fs-5 fw-bold text-info mb-2">
+                    💥 「制御されたカオス」の設計
+                  </h4>
+                  <p class="text-secondary">
+                    プレイヤーのスキルが結果に影響するが、完全には支配できないシステム。物理演算や偶発性が生む予測不能な展開（良いものも悪いものも）が、<span
+                      class="fw-bold"
+                      >最高のドラマと「切り抜き可能」な瞬間</span
+                    >を生み出します。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 開発＆ローンチ Section -->
+        <section id="dev" class="content-section">
+          <div class="text-center mb-5">
+            <h2 class="fs-1 fw-bold text-info mb-3">
+              開発＆ローンチ：技術と戦略の設計図
+            </h2>
+            <p class="mx-auto text-secondary" style="max-width: 800px;">
+              アイデアを形にし、世界に届けるための技術的な選択、法的な注意点、そして発売初日からコミュニティを築くための具体的な方法論を解説します。
+            </p>
+          </div>
+
+          <div class="row row-cols-1 row-cols-lg-2 g-4">
+            <div class="col">
+              <div class="card shadow-sm p-4">
+                <h3 class="fs-3 fw-bold text-info mb-3">
+                  技術選定：エンジンとプラットフォーム
+                </h3>
+                <div class="mb-3">
+                  <h4 class="fw-bold fs-5 text-purple">
+                    エンジン選定のポイント
+                  </h4>
+                  <p class="text-secondary">
+                    アクセシビリティが鍵。ダウンロード不要の<span
+                      class="fw-bold"
+                      >ブラウザゲーム(WebGL)</span
+                    >は、衝動的なプレイを促すのに最適です。
+                  </p>
+                  <ul class="list-unstyled ps-3">
+                    <li class="mb-2">
+                      <strong>Godot:</strong>
+                      軽量・オープンソース。2Dに強く、個人開発の最有力候補。
+                    </li>
+                    <li class="mb-2">
+                      <strong>Unity:</strong>
+                      業界標準。パワフルだがビルドサイズが大きくなる傾向。
+                    </li>
+                    <li>
+                      <strong>Phaser/PlayCanvas:</strong>
+                      JSネイティブ。Web特化で高速。
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="fw-bold fs-5 text-purple">
+                    プラットフォーム戦略
+                  </h4>
+                  <p class="text-secondary">段階的なアプローチが有効です。</p>
+                  <ul class="list-unstyled ps-3">
+                    <li class="mb-2">
+                      <strong>itch.io:</strong>
+                      理想的な「発射台」。無料でデモを公開し、初期フィードバックを得る。
+                    </li>
+                    <li>
+                      <strong>Steam:</strong>
+                      商業的成功の最終目標。itch.ioでコミュニティを築き、ウィッシュリストを増やしてから臨む。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm p-4">
+                <h3 class="fs-3 fw-bold text-info mb-3">
+                  コミュニティをゼロ日目から築く
+                </h3>
+                <div class="mb-3">
+                  <h4 class="fw-bold fs-5 text-purple">
+                    X (旧Twitter) 戦略
+                  </h4>
+                  <p class="text-secondary">
+                    発見と情報発信の場。<span class="fw-bold"
+                      >魅力的なGIFや動画</span
+                    >で開発進捗を頻繁に投稿し、関連ハッシュタグ (`#gamedev`,
+                    `#indiedev`)で交流する。
+                  </p>
+                </div>
+                <div>
+                  <h4 class="fw-bold fs-5 text-purple">Discord 戦略</h4>
+                  <p class="text-secondary">
+                    深いコミュニティの拠点。早期にサーバーを立ち上げ、熱心なファンから<span
+                      class="fw-bold"
+                      >直接フィードバックを得る。</span
+                    >彼らがやがてゲームを広める伝道師となります。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm p-4 mt-4">
+            <h3 class="fs-3 fw-bold text-info mb-3 text-center">
+              著作権リスクの航海術
+            </h3>
+            <p class="text-center text-secondary mb-4">
+              ミームの利用は法的リスクを伴います。最も安全で創造的な戦略はどれか、下のマトリクスにカーソルを合わせて確認してください。
+            </p>
+            <div
+              id="risk-matrix"
+              class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"
+            ></div>
+          </div>
+        </section>
+
+        <!-- VTuber戦略 Section -->
+        <section id="vtuber" class="content-section">
+          <div class="text-center mb-5">
+            <h2 class="fs-1 fw-bold text-info mb-3">
+              VTuber戦略：エンゲージメントへの道
+            </h2>
+            <p class="mx-auto text-secondary" style="max-width: 800px;">
+              ゲームをVTuberに届け、プレイしてもらい、最終的には対等な協力者となるための関係構築の技術を学びます。これはマーケティングではなく、コミュニティの一員になるためのプロセスです。
+            </p>
+          </div>
+
+          <div class="card shadow-sm p-4 mb-4">
+            <h3 class="fs-3 fw-bold text-info mb-3 text-center">
+              アウトリーチ・プレイブック
+            </h3>
+            <p class="text-center text-secondary mb-4">
+              VTuberへのアプローチは段階的に進めるべきです。各フェーズをクリックして、具体的なアクションを確認しましょう。
+            </p>
+            <div id="outreach-playbook" class="d-flex flex-column gap-3"></div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+              <div class="card shadow-sm p-4">
+                <h3 class="fs-3 fw-bold text-info mb-3">
+                  VTuberランドスケープ
+                </h3>
+                <p class="text-secondary mb-3">
+                  VTuberの世界は「企業勢」と「個人勢」に大別されます。それぞれアプローチが異なります。
+                </p>
+                <ul class="list-unstyled">
+                  <li class="d-flex mb-3">
+                    <span class="fs-3 me-3">🏢</span>
+                    <div>
+                      <h4 class="fw-bold">企業勢 (にじさんじ、ホロライブ等)</h4>
+                      <p class="text-secondary">
+                        リーチは絶大ですが、アプローチは公式窓口経由か、ゲームが社会現象になる必要があります。「holo
+                        Indie」のような公式ルートも存在します。
+                      </p>
+                    </div>
+                  </li>
+                  <li class="d-flex">
+                    <span class="fs-3 me-3">👤</span>
+                    <div>
+                      <h4 class="fw-bold">個人勢</h4>
+                      <p class="text-secondary">
+                        広大で多様なフロンティア。コンテンツ選択の自由度が高く、直接コンタクトしやすい。初期戦略は<span
+                          class="fw-bold"
+                          >小〜中規模のVTuber</span
+                        >との関係構築が効果的です。
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm p-4">
+                <h3 class="fs-3 fw-bold text-info mb-3">
+                  開発者から協力者へ
+                </h3>
+                <p class="text-secondary mb-3">
+                  最終目標は、VTuberと対等な立場で対談すること。これは、あなたのゲームがコミュニティの「共通言語」となり、<span
+                    class="fw-bold"
+                    >あなた自身の物語がゲームと同じくらい面白くなった時</span
+                  >に実現します。
+                </p>
+                <ul class="list-unstyled">
+                  <li class="d-flex mb-3">
+                    <span class="fs-3 me-3">🤝</span>
+                    <div>
+                      <h4 class="fw-bold">コミュニティの共通言語</h4>
+                      <p class="text-secondary">
+                        複数のVTuberがプレイし、内輪ネタが生まれる段階。あなたは「コミュニティのファシリテーター」となります。
+                      </p>
+                    </div>
+                  </li>
+                  <li class="d-flex">
+                    <span class="fs-3 me-3">🎤</span>
+                    <div>
+                      <h4 class="fw-bold">対談は「パフォーマンス」</h4>
+                      <p class="text-secondary">
+                        インタビューはマーケティングではなく、視聴者を楽しませるための共同作業。機能の羅列ではなく、開発のドラマを「ストーリーテラー」として語りましょう。
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const navLinks = document.querySelectorAll(".nav-link");
+        const contentSections = document.querySelectorAll(".content-section");
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            const targetId = link.dataset.target;
+
+            navLinks.forEach((navLink) => {
+              navLink.classList.remove("active");
+              if (navLink.dataset.target === targetId) {
+                navLink.classList.add("active");
+              }
+            });
+
+            contentSections.forEach((section) => {
+              section.classList.remove("active");
+              if (section.id === targetId) {
+                section.classList.add("active");
+              }
+            });
+          });
+        });
+
+        const viralDnaData = {
+          labels: [
+            "単純明快さ",
+            "予測不能なカオス",
+            "高いスキルシーリング",
+            "中毒性",
+            "配信映え",
+          ],
+          datasets: {
+            suika: {
+              label: "スイカゲーム",
+              data: [5, 4, 3, 5, 4],
+              borderColor: "rgba(255, 99, 132, 1)",
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+            },
+            gettingoverit: {
+              label: "Getting Over It",
+              data: [4, 5, 5, 4, 5],
+              borderColor: "rgba(54, 162, 235, 1)",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+            },
+            onlyup: {
+              label: "Only Up!",
+              data: [3, 5, 4, 3, 5],
+              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+            },
+          },
+        };
+
+        const dnaChartCtx = document
+          .getElementById("viralDnaChart")
+          .getContext("2d");
+        let dnaChart = new Chart(dnaChartCtx, {
+          type: "radar",
+          data: {
+            labels: viralDnaData.labels,
+            datasets: [viralDnaData.datasets.suika],
+          },
+          options: {
+            maintainAspectRatio: false,
+            scales: {
+              r: {
+                angleLines: {
+                  display: false,
+                },
+                suggestedMin: 0,
+                suggestedMax: 5,
+                pointLabels: {
+                  font: {
+                    size: 12,
+                  },
+                },
+                ticks: {
+                  stepSize: 1,
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                position: "top",
+              },
+            },
+          },
+        });
+
+        const gameSelectorBtns = document.querySelectorAll(".game-selector-btn");
+        gameSelectorBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const gameId = btn.dataset.game;
+            dnaChart.data.datasets[0] = viralDnaData.datasets[gameId];
+            dnaChart.update();
+
+            gameSelectorBtns.forEach((b) => {
+              b.classList.remove("btn-info", "btn-outline-secondary");
+              b.classList.add(
+                b.dataset.game === gameId ? "btn-info" : "btn-outline-secondary"
+              );
+            });
+          });
+        });
+
+        const riskMatrixData = [
+          {
+            title: "1. 著作物アセットの直接利用",
+            risk: "極めて高い",
+            potential: "高い",
+            recommendation:
+              "実行不可。権利侵害でほぼ確実に法的措置の対象となる。",
+            class: "risk-extreme",
+          },
+          {
+            title: "2. 著作物アセットの再創作",
+            risk: "高い",
+            potential: "高い",
+            recommendation:
+              "非推奨。翻案権の侵害にあたる可能性が高い。権利者からの許諾なしには極めて危険。",
+            class: "risk-high",
+          },
+          {
+            title: "3. ミーム「フォーマット」の利用",
+            risk: "低い〜中程度",
+            potential: "中程度",
+            recommendation:
+              "検討可能。フォーマット自体はアイデアであり著作権の対象外だが、酷似しすぎると問題視される可能性も残る。",
+            class: "risk-medium",
+          },
+          {
+            title: "4. ミームの「中核コンセプト」の翻案",
+            risk: "最小",
+            potential: "非常に高い",
+            recommendation:
+              "強く推奨。普遍的な感情や状況に着想を得るため、著作権リスクがほぼない。最も戦略的な手法。",
+            class: "risk-low",
+          },
+        ];
+
+        const riskMatrixContainer = document.getElementById("risk-matrix");
+        riskMatrixData.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "col";
+          card.innerHTML = `
+            <div class="card h-100 border card-hover p-3">
+              <h4 class="fw-bold fs-5 mb-2">${item.title}</h4>
+              <div class="mb-2">リスクレベル: <span class="fw-bold px-2 py-1 rounded-pill fs-6 ${item.class}">${item.risk}</span></div>
+              <p class="small text-secondary">${item.recommendation}</p>
+            </div>
+          `;
+          riskMatrixContainer.appendChild(card);
+        });
+
+        const outreachData = [
+          {
+            phase: "フェーズ1：基盤構築",
+            description:
+              "何かを求める前に、まず価値を提供する。信頼を築くための第一歩。",
+            items: [
+              "<strong class='text-info'>良きコミュニティメンバーであれ:</strong> アプローチしたいVTuberの配信を視聴し、ファンとして純粋にコミュニティに参加する。",
+              "<strong class='text-info'>自身のプレゼンスを確立する:</strong> Xアカウントで開発進捗を投稿し、#gamedev 等のコミュニティであなたが真剣なクリエイターであることを示す。",
+            ],
+          },
+          {
+            phase: "フェーズ2：能動的アウトリーチ",
+            description: "完璧なピッチを作成し、敬意をもってアプローチする。",
+            items: [
+              "<strong class='text-info'>ターゲティング:</strong> ゲームのジャンルに合う小〜中規模のVTuberに焦点を当てる。",
+              "<strong class='text-info'>パーソナライズ:</strong> 相手の名前で呼びかけ、リサーチを尽くしたファンであることを示す。",
+              "<strong class='text-info'>簡潔さと専門性:</strong> なぜ「そのVTuberの」視聴者が楽しむかを具体的に説明する。",
+              "<strong class='text-info'>プレスキットとゲームキー:</strong> 相手の手間をなくすための準備を怠らない。",
+              "<strong class='text-info'>要求しない姿勢:</strong> あくまで「機会の提供」という形で提案する。",
+            ],
+          },
+          {
+            phase: "フェーズ3：配信のサポート",
+            description:
+              "一方的なマーケティングではなく、対等なパートナーシップを築く。",
+            items: [
+              "<strong class='text-info'>明確なガイドライン:</strong> ネタバレ等に関する配信ガイドラインを用意し、プロ意識を示す。",
+              "<strong class='text-info'>いつでも対応できる体制:</strong> 配信をサポートし、技術的な質問やフィードバックに感謝を伝える。",
+              "<strong class='text-info'>相互プロモーション:</strong> 自身のSNSでも配信を宣伝し、協力関係をアピールする。",
+            ],
+          },
+        ];
+
+        const outreachContainer = document.getElementById("outreach-playbook");
+        outreachData.forEach((data, index) => {
+          const item = document.createElement("div");
+          item.className = "card border";
+          item.innerHTML = `
+            <button class="w-100 text-start p-3 d-flex justify-content-between align-items-center bg-light border-0">
+              <div>
+                <h4 class="fw-bold fs-5 text-purple">${data.phase}</h4>
+                <p class="small text-secondary mb-0">${data.description}</p>
+              </div>
+              <span class="transition fs-3 text-purple">+</span>
+            </button>
+            <div class="outreach-content bg-white p-3 border-top" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; padding-top: 0; padding-bottom: 0;">
+              <ul class="list-unstyled ps-3 mb-0">
+                ${data.items.map((li) => `<li class="mb-2">${li}</li>`).join("")}
+              </ul>
+            </div>
+          `;
+          const button = item.querySelector("button");
+          const content = item.querySelector(".outreach-content");
+          const icon = button.querySelector("span");
+
+          button.addEventListener("click", () => {
+            const isOpen = content.style.maxHeight !== "0px";
+            // Close all others
+            document.querySelectorAll(".outreach-content").forEach((c) => {
+              c.style.maxHeight = "0px";
+              c.style.paddingTop = "0";
+              c.style.paddingBottom = "0";
+              c.previousElementSibling.querySelector("span").textContent = "+";
+              c.previousElementSibling
+                .querySelector("span")
+                .classList.remove("rotate-45");
+            });
+
+            if (!isOpen) {
+              content.style.maxHeight = content.scrollHeight + "px";
+              content.style.paddingTop = "1rem";
+              content.style.paddingBottom = "1rem";
+              icon.textContent = "−";
+              icon.classList.add("rotate-45");
+            }
+          });
+          outreachContainer.appendChild(item);
+        });
+
+        const roadmapData = [
+          {
+            phase: "1",
+            title: "コンセプトとプロトタイプ",
+            duration: "1〜3ヶ月目",
+            content:
+              "普遍的な感情に基づいたミーム「コンセプト」を特定し、コアメカニクスのプロトタイプを制作。Xアカウントを開設し、開発の旅を記録し始める。",
+          },
+          {
+            phase: "2",
+            title: "バーティカルスライスとコミュニティ構築",
+            duration: "4〜9ヶ月目",
+            content:
+              "ゲームの魅力を凝縮したデモをitch.ioで公開。Discordサーバーを立ち上げ、プレイテスターを募集。VTuberコミュニティへの受動的エンゲージメントを開始。",
+          },
+          {
+            phase: "3",
+            title: "フルローンチと積極的アウトリーチ",
+            duration: "10〜12ヶ月目",
+            content:
+              "itch.ioまたはSteamでフルバージョンをローンチ。VTuberへのパーソナライズされたピッチを本格的に実行。ソーシャルメディアを監視し、言及に迅速に反応する。",
+          },
+          {
+            phase: "4",
+            title: "ローンチ後と飛躍",
+            duration: "13ヶ月目以降",
+            content:
+              "フィードバックに基づきゲームをアップデート。コミュニティを活性化させ、プレイヤーの功績を称える。築き上げた関係性を基盤に、対談や次のプロジェクトへと繋げる。",
+          },
+        ];
+
+        const roadmapContainer = document.getElementById("roadmap-container");
+        roadmapData.forEach((item, index) => {
+          const isLeft = index % 2 === 0;
+          const timelineItem = document.createElement("div");
+          timelineItem.className = `position-relative ${isLeft ? "me-md-auto" : "ms-md-auto"}`;
+          timelineItem.style.gridColumn = isLeft ? "1" : "1";
+          timelineItem.style.width = "100%";
+          timelineItem.style.maxWidth = "calc(50% - 1rem)";
+
+          timelineItem.innerHTML = `
+            <div id="phase-btn-${item.phase}" class="card border p-3 card-hover cursor-pointer">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="text-purple fw-bold">フェーズ ${item.phase}</span>
+                  <h4 class="fs-5 fw-bold text-info mb-0">${item.title}</h4>
+                  <p class="text-secondary small mb-0">${item.duration}</p>
+                </div>
+                <span class="phase-icon transition fs-3 text-purple">+</span>
+              </div>
+              <div id="phase-content-${item.phase}" class="phase-content">
+                <p class="text-secondary mt-3 mb-0">${item.content}</p>
+              </div>
+            </div>
+          `;
+          roadmapContainer.appendChild(timelineItem);
+
+          const button = document.getElementById(`phase-btn-${item.phase}`);
+          const content = document.getElementById(`phase-content-${item.phase}`);
+          const icon = button.querySelector(".phase-icon");
+
+          button.addEventListener("click", () => {
+            const isOpen = content.style.maxHeight !== "0px";
+            if (isOpen) {
+              content.style.maxHeight = "0px";
+              content.style.padding = "0 1.5rem";
+              icon.classList.remove("rotate-45");
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+              content.style.padding = "1rem 0 0 0";
+              icon.classList.add("rotate-45");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
