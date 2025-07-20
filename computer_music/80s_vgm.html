@@ -16,13 +16,13 @@
       body {
         font-family: "VT323", monospace;
         background-color: #0a0a0a;
-        color: #00ff41;
-        text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41;
+        color: #ffffff; /* Changed from #00ff41 to white */
+        text-shadow: 0 0 3px #00662b, 0 0 1px #00662b; /* Darkened green glow */
         background-image: linear-gradient(
-            rgba(0, 255, 65, 0.05) 1px,
+            rgba(0, 102, 43, 0.05) 1px, /* Darkened green */
             transparent 1px
           ),
-          linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+          linear-gradient(90deg, rgba(0, 102, 43, 0.05) 1px, transparent 1px);
         background-size: 20px 20px;
       }
       .crt-glow {
@@ -30,10 +30,10 @@
       }
       @keyframes crt-glow-anim {
         from {
-          text-shadow: 0 0 3px #007f20, 0 0 6px #007f20;
+          text-shadow: 0 0 3px #00331a, 0 0 6px #00331a; /* Darkened green glow */
         }
         to {
-          text-shadow: 0 0 5px #007f20, 0 0 10px #007f20;
+          text-shadow: 0 0 5px #00331a, 0 0 10px #00331a; /* Darkened green glow */
         }
       }
       .font-press-start {
@@ -41,15 +41,20 @@
       }
       .card {
         background-color: rgba(0, 20, 0, 0.7);
-        border: 1px solid #007f20;
-        box-shadow: 0 0 10px rgba(0, 127, 32, 0.2) inset;
+        border: 1px solid #00662b; /* Darkened green */
+        box-shadow: 0 0 10px rgba(0, 102, 43, 0.2) inset; /* Darkened green */
       }
       .card-title {
-        background-color: #00ff41;
-        color: #0a0a0a;
+        background-color: #00662b; /* Darkened green */
+        color: #ffffff; /* Changed to white */
         text-shadow: none;
       }
-      /* Blinking cursor effect */
+        .card-body {
+            flex: 1 1 auto;
+            padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+            color: #99CC99;
+        }      
+        /* Blinking cursor effect */
       .cursor::after {
         content: "_";
         animation: blink 1s step-start infinite;
@@ -71,7 +76,7 @@
         content: ">";
         position: absolute;
         left: -1.5rem;
-        color: #00ff41;
+        color: #00662b; /* Darkened green */
       }
       .text-white {
         color: white !important;
@@ -80,7 +85,7 @@
         color: #ffff00 !important;
       }
       .border-green {
-        border: 2px solid #00ff41 !important;
+        border: 2px solid #00662b !important; /* Darkened green */
       }
     </style>
   </head>
@@ -89,7 +94,7 @@
       <!-- Header -->
       <header class="border-green p-4 mb-5 text-center">
         <h1 class="font-press-start display-5 crt-glow cursor">
-          BEEP OS v2.1
+          80's VGM Strategy Guide
         </h1>
         <p class="fs-4 mt-2">SYSTEM BOOTING... OK</p>
         <p class="fs-4">LOADING MODULE: DTM_GUIDE.HTML</p>
