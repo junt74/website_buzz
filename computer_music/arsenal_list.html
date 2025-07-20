@@ -81,6 +81,104 @@
         color: #93c5fd; /* Tailwind blue-300 */
         text-decoration: underline;
       }
+
+      /* Filter buttons styling */
+      .filter-btn {
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        border-radius: 0.5rem;
+      }
+      
+      .filter-btn.active {
+        box-shadow: 0 0 0 2px #60a5fa;
+      }
+      
+      .filter-btn-futurefunk {
+        color: #c4b5fd; /* Violet-300 */
+        background-color: rgba(196, 181, 253, 0.1);
+        border: 1px solid rgba(196, 181, 253, 0.4);
+      }
+      
+      .filter-btn-futurefunk.active, .filter-btn-futurefunk:hover {
+        background-color: rgba(196, 181, 253, 0.2);
+      }
+      
+      .filter-btn-cyberpunk {
+        color: #67e8f9; /* Cyan-300 */
+        background-color: rgba(103, 232, 249, 0.1);
+        border: 1px solid rgba(103, 232, 249, 0.4);
+      }
+      
+      .filter-btn-cyberpunk.active, .filter-btn-cyberpunk:hover {
+        background-color: rgba(103, 232, 249, 0.2);
+      }
+      
+      .filter-btn-lofi {
+        color: #fcd34d; /* Amber-300 */
+        background-color: rgba(252, 211, 77, 0.1);
+        border: 1px solid rgba(252, 211, 77, 0.4);
+      }
+      
+      .filter-btn-lofi.active, .filter-btn-lofi:hover {
+        background-color: rgba(252, 211, 77, 0.2);
+      }
+      
+      .filter-btn-all {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .filter-btn-all.active, .filter-btn-all:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      /* Style for genre badges */
+      .genre-badge {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 9999px;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+        display: inline-block;
+      }
+      
+      .genre-badge-futurefunk {
+        background-color: rgba(196, 181, 253, 0.2); /* Violet-300 */
+        color: #c4b5fd;
+        border: 1px solid rgba(196, 181, 253, 0.4);
+      }
+      
+      .genre-badge-cyberpunk {
+        background-color: rgba(103, 232, 249, 0.2); /* Cyan-300 */
+        color: #67e8f9;
+        border: 1px solid rgba(103, 232, 249, 0.4);
+      }
+      
+      .genre-badge-lofi {
+        background-color: rgba(252, 211, 77, 0.2); /* Amber-300 */
+        color: #fcd34d;
+        border: 1px solid rgba(252, 211, 77, 0.4);
+      }
+      
+      /* Animation for filtering */
+      .fade-transition {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      
+      .fade-out {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      
+      .fade-in {
+        opacity: 1;
+        transform: scale(1);
+      }
+      
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -110,6 +208,39 @@
             </svg>
             アーセナル戦略ガイドに戻る
           </a>
+          
+          <a href="modern_vintage.html" class="back-link mb-4 ms-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-music-note-list me-2" viewBox="0 0 16 16">
+              <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2z"/>
+              <path fill-rule="evenodd" d="M12 3v10h-1V3h1z"/>
+              <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1V2.82z"/>
+              <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            Modern Vintageブループリントを見る
+          </a>
+          
+          <!-- Filter buttons for music genres -->
+          <div class="mt-4 mb-3">
+            <h4 class="fs-5 text-white mb-3">ジャンル別フィルター:</h4>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn filter-btn filter-btn-all active" data-filter="all">
+                すべて表示
+              </button>
+              <button class="btn filter-btn filter-btn-futurefunk" data-filter="futurefunk">
+                <span class="d-inline-block me-1">🚀</span> Future Funk / Vaporwave
+              </button>
+              <button class="btn filter-btn filter-btn-cyberpunk" data-filter="cyberpunk">
+                <span class="d-inline-block me-1">🌃</span> Cyberpunk Synthwave
+              </button>
+              <button class="btn filter-btn filter-btn-lofi" data-filter="lofi">
+                <span class="d-inline-block me-1">🎮</span> Lo-Fi x Chiptune
+              </button>
+            </div>
+          </div>
+          
+          <div id="filterStatus" class="alert alert-info d-none mt-3">
+            表示されているプラグイン: <span id="visibleCount">0</span> / <span id="totalCount">0</span>
+          </div>
 
           <div id="pluginContainer" class="mt-4">
             <!-- Plugin content will be loaded here -->
@@ -132,6 +263,32 @@
         const response = await fetch('../json/vst_plugin_list.json');
         const plugins = await response.json();
         
+        // Genre mapping data - based on modern_vintage.html recommendations
+        // This maps plugins to the three genres mentioned in modern_vintage.html
+        const genreMapping = {
+          // Future Funk / Vaporwave
+          "futurefunk": [
+            "TAL-Drum", "XO", "bx_Townhouse", "RX950", "IconDrum", "DMX", 
+            "TAL BassLine 101", "FM8", "U-NO-LX", "Dreamsynth", "JURA Chorus", 
+            "ValhallaVintageVerb", "M1", "Emulation II+", "TAL Sampler", 
+            "Effectrix", "ShaperBox"
+          ],
+          // Cyberpunk Synthwave
+          "cyberpunk": [
+            "Drumazon 2", "DMX", "ValhallaVintageVerb", "Smasher", 
+            "TAL BassLine 101", "Serum", "Massive", "Disperser", 
+            "GX-80", "Polymode", "Super VHS", "RC-20", "PolyMAX", 
+            "Echorec", "ShaperBox"
+          ],
+          // Lo-Fi x Chiptune
+          "lofi": [
+            "RX1200", "TAL Sampler", "Life", "XO", "HalfTime", 
+            "Amigo Sampler", "miniBit", "Chipsynth MD", "FEM-RODO", 
+            "RC-20", "TAIP", "Chipsynth SFC", "GameVerb", 
+            "Effectrix", "Synthesizer V"
+          ]
+        };
+        
         // Group plugins by main category
         const groupedPlugins = {};
         plugins.forEach(plugin => {
@@ -143,6 +300,7 @@
 
         // Create the HTML content
         const pluginContainer = document.getElementById('pluginContainer');
+        let totalPlugins = 0;
         
         // Loop through each main category
         for (const [mainCategory, categoryPlugins] of Object.entries(groupedPlugins)) {
@@ -174,8 +332,21 @@
             
             // Add each plugin to the row
             subCategoryPlugins.forEach(plugin => {
+              // Determine which genres this plugin is suitable for
+              const genres = [];
+              Object.entries(genreMapping).forEach(([genre, pluginList]) => {
+                if (pluginList.includes(plugin.name)) {
+                  genres.push(genre);
+                }
+              });
+              
+              totalPlugins++;
+              
               const col = document.createElement('div');
-              col.className = 'col';
+              col.className = 'col fade-transition';
+              
+              // Add data-genres attribute for filtering
+              col.setAttribute('data-genres', genres.join(' '));
               
               const card = document.createElement('div');
               card.className = 'plugin-card';
@@ -192,9 +363,36 @@
               memo.className = 'plugin-memo';
               memo.textContent = plugin.memo;
               
-              card.appendChild(name);
-              card.appendChild(developer);
-              card.appendChild(memo);
+              // Add genre badges if this plugin is associated with any genres
+              if (genres.length > 0) {
+                const badgesContainer = document.createElement('div');
+                badgesContainer.className = 'mt-2';
+                
+                genres.forEach(genre => {
+                  const badge = document.createElement('span');
+                  badge.className = `genre-badge genre-badge-${genre}`;
+                  
+                  // Set the text content based on the genre
+                  if (genre === 'futurefunk') {
+                    badge.textContent = 'Future Funk / Vaporwave';
+                  } else if (genre === 'cyberpunk') {
+                    badge.textContent = 'Cyberpunk Synthwave';
+                  } else if (genre === 'lofi') {
+                    badge.textContent = 'Lo-Fi x Chiptune';
+                  }
+                  
+                  badgesContainer.appendChild(badge);
+                });
+                
+                card.appendChild(name);
+                card.appendChild(developer);
+                card.appendChild(memo);
+                card.appendChild(badgesContainer);
+              } else {
+                card.appendChild(name);
+                card.appendChild(developer);
+                card.appendChild(memo);
+              }
               
               col.appendChild(card);
               row.appendChild(col);
@@ -203,6 +401,76 @@
             pluginContainer.appendChild(row);
           }
         }
+        
+        // Update the total count
+        const totalCountElement = document.getElementById('totalCount');
+        totalCountElement.textContent = totalPlugins;
+        
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const filterStatus = document.getElementById('filterStatus');
+        const visibleCountElement = document.getElementById('visibleCount');
+        
+        // Set initial count
+        visibleCountElement.textContent = totalPlugins;
+        
+        filterButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to the clicked button
+            button.classList.add('active');
+            
+            // Get the filter value
+            const filterValue = button.dataset.filter;
+            
+            // Get all plugin columns
+            const pluginCols = document.querySelectorAll('#pluginContainer .col');
+            
+            // Counter for visible plugins
+            let visibleCount = 0;
+            
+            // Filter the plugins
+            pluginCols.forEach(col => {
+              // Get the genres this plugin belongs to
+              const genres = col.dataset.genres.split(' ');
+              
+              // Check if we should show this plugin
+              const shouldShow = filterValue === 'all' || genres.includes(filterValue);
+              
+              // Add or remove the hidden class with animation
+              if (shouldShow) {
+                // If it's hidden, fade it in
+                if (col.classList.contains('hidden')) {
+                  col.classList.remove('hidden');
+                  setTimeout(() => {
+                    col.classList.remove('fade-out');
+                    col.classList.add('fade-in');
+                  }, 10);
+                }
+                visibleCount++;
+              } else {
+                // Fade it out then hide it
+                col.classList.remove('fade-in');
+                col.classList.add('fade-out');
+                setTimeout(() => {
+                  col.classList.add('hidden');
+                }, 300);
+              }
+            });
+            
+            // Update the visible count
+            visibleCountElement.textContent = visibleCount;
+            
+            // Show the status if filtering
+            if (filterValue !== 'all') {
+              filterStatus.classList.remove('d-none');
+            } else {
+              filterStatus.classList.add('d-none');
+            }
+          });
+        });
       });
     </script>
   </body>
