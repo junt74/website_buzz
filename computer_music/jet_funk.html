@@ -1,288 +1,506 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ジェットファンク：長沼英樹サウンドスタイルガイド</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter フォントの読み込み -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            /* ダークオレンジの背景色 */
-            background-color: #2a1a00; /* 非常に暗いオレンジ/ブラウン */
-        }
-        /* カスタムダークオレンジの定義 */
-        .bg-dark-orange {
-            background-color: #cc5500; /* メインのダークオレンジ */
-        }
-        .text-dark-orange {
-            color: #cc5500;
-        }
-        .border-dark-orange {
-            border-color: #cc5500;
-        }
-        .hover\:bg-dark-orange-light:hover {
-            background-color: #e66a00; /* ホバー時の明るいオレンジ */
-        }
-        .bg-dark-orange-darker {
-            background-color: #994000; /* より暗いオレンジ */
-        }
-        /* Markdownコンテンツのスタイリング調整 */
-        .markdown-content h1 {
-            @apply text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white;
-        }
-        .markdown-content h2 {
-            @apply text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center;
-        }
-        .markdown-content h3 {
-            @apply text-2xl sm:text-3xl font-bold text-dark-orange mb-4;
-        }
-        .markdown-content p {
-            @apply text-lg text-gray-300 mb-4;
-        }
-        .markdown-content ul {
-            @apply list-disc list-inside space-y-2 mb-6 pl-4;
-        }
-        .markdown-content li {
-            @apply text-gray-300;
-        }
-        .markdown-content strong {
-            @apply text-dark-orange;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+        /* ダークオレンジの背景色 */
+        background-color: #2a1a00; /* 非常に暗いオレンジ/ブラウン */
+      }
+      /* カスタムダークオレンジの定義 */
+      .bg-dark-orange {
+        background-color: #cc5500; /* メインのダークオレンジ */
+      }
+      .text-dark-orange {
+        color: #cc5500;
+      }
+      .border-dark-orange {
+        border-color: #cc5500;
+      }
+      .hover\:bg-dark-orange-light:hover {
+        background-color: #e66a00; /* ホバー時の明るいオレンジ */
+      }
+      .bg-dark-orange-darker {
+        background-color: #994000; /* より暗いオレンジ */
+      }
+      /* Markdownコンテンツのスタイリング調整 */
+      .markdown-content h1 {
+        @apply text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white;
+      }
+      .markdown-content h2 {
+        @apply text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center;
+      }
+      .markdown-content h3 {
+        @apply text-2xl sm:text-3xl font-bold text-dark-orange mb-4;
+      }
+      .markdown-content p {
+        @apply text-lg text-gray-300 mb-4;
+      }
+      .markdown-content ul {
+        @apply list-disc list-inside space-y-2 mb-6 pl-4;
+      }
+      .markdown-content li {
+        @apply text-gray-300;
+      }
+      .markdown-content strong {
+        @apply text-dark-orange;
+      }
     </style>
-</head>
-<body class="text-gray-100">
+  </head>
+  <body class="text-gray-100">
     <!-- ナビゲーションバー -->
     <nav class="bg-dark-orange p-4 shadow-lg rounded-b-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-white text-2xl font-bold rounded-md p-2 hover:bg-dark-orange-darker transition-colors duration-300">
-                ジェットファンク
-            </a>
-            <div class="md:hidden">
-                <button id="menu-button" class="text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-            <div id="nav-menu" class="hidden md:flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 items-center">
-                <a href="#" class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300">ホーム</a>
-                <a href="#" class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300">ガイド</a>
-                <a href="#" class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300">プラグイン</a>
-                <a href="#" class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300">お問い合わせ</a>
-            </div>
+      <div class="container mx-auto flex justify-between items-center">
+        <a
+          href="#"
+          class="text-white text-2xl font-bold rounded-md p-2 hover:bg-dark-orange-darker transition-colors duration-300"
+        >
+          ジェットファンク
+        </a>
+        <div class="md:hidden">
+          <button id="menu-button" class="text-white focus:outline-none">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
         </div>
+        <div
+          id="nav-menu"
+          class="hidden md:flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 items-center"
+        >
+          <a
+            href="#"
+            class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300"
+            >ホーム</a
+          >
+          <a
+            href="#"
+            class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300"
+            >ガイド</a
+          >
+          <a
+            href="#"
+            class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300"
+            >プラグイン</a
+          >
+          <a
+            href="#"
+            class="text-white hover:text-gray-300 py-2 px-3 rounded-md transition-colors duration-300"
+            >お問い合わせ</a
+          >
+        </div>
+      </div>
     </nav>
 
     <!-- ヒーローセクション -->
-    <header class="relative bg-dark-orange-darker text-white py-16 md:py-24 lg:py-32 rounded-lg m-4 shadow-xl overflow-hidden">
-        <div class="container mx-auto text-center px-4">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
-                ジェットファンクの世界へようこそ
-            </h1>
-            <p class="text-lg sm:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-                長沼英樹氏のユニークなサウンドスタイル「ジェットファンク」を深く探求し、あなたの音楽制作に活かすためのガイド。
-            </p>
-            <button class="bg-white text-dark-orange font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">
-                ガイドを読み始める
-            </button>
-        </div>
-        <!-- 背景の抽象的な図形 (Tailwind CSSで円形を配置) -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute w-48 h-48 bg-dark-orange-darker opacity-30 rounded-full -top-12 -left-12 transform rotate-45"></div>
-            <div class="absolute w-64 h-64 bg-dark-orange opacity-20 rounded-full -bottom-24 -right-24 transform -rotate-30"></div>
-            <div class="absolute w-32 h-32 bg-dark-orange-darker opacity-40 rounded-full top-1/4 right-1/4 transform rotate-60"></div>
-        </div>
+    <header
+      class="relative bg-dark-orange-darker text-white py-16 md:py-24 lg:py-32 rounded-lg m-4 shadow-xl overflow-hidden"
+    >
+      <div class="container mx-auto text-center px-4">
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight"
+        >
+          ジェットファンクの世界へようこそ
+        </h1>
+        <p
+          class="text-lg sm:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto opacity-90"
+        >
+          長沼英樹氏のユニークなサウンドスタイル「ジェットファンク」を深く探求し、あなたの音楽制作に活かすためのガイド。
+        </p>
+      </div>
+      <!-- 背景の抽象的な図形 (Tailwind CSSで円形を配置) -->
+      <div
+        class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"
+      >
+        <div
+          class="absolute w-48 h-48 bg-dark-orange-darker opacity-30 rounded-full -top-12 -left-12 transform rotate-45"
+        ></div>
+        <div
+          class="absolute w-64 h-64 bg-dark-orange opacity-20 rounded-full -bottom-24 -right-24 transform -rotate-30"
+        ></div>
+        <div
+          class="absolute w-32 h-32 bg-dark-orange-darker opacity-40 rounded-full top-1/4 right-1/4 transform rotate-60"
+        ></div>
+      </div>
     </header>
 
     <!-- ジェットファンクガイドコンテンツ -->
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <section class="my-12 bg-gray-800 p-6 sm:p-8 lg:p-10 rounded-lg shadow-lg border border-gray-700 markdown-content">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white">ジェットファンク：長沼英樹サウンド再現プラグイン構成ガイド</h1>
+      <section
+        class="my-12 bg-gray-800 p-6 sm:p-8 lg:p-10 rounded-lg shadow-lg border border-gray-700 markdown-content"
+      >
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white"
+        >
+          ジェットファンク：長沼英樹サウンド再現プラグイン構成ガイド
+        </h1>
 
-            <p>長沼英樹氏の楽曲スタイルは、テクノ、ファンク、ソウル、ヒップホップを融合したユニークなサウンドが特徴です。このスタイルを「<strong>ジェットファンク</strong>」と名付け、その魅力をDTMで再現するためのプラグイン構成ガイドをまとめました。お手持ちのプラグインを効果的に活用することで、この「ジェットファンク」サウンドをあなたの制作に取り入れることが可能です。</p>
+        <p>
+          長沼英樹氏の楽曲スタイルは、テクノ、ファンク、ソウル、ヒップホップを融合したユニークなサウンドが特徴です。このスタイルを「<strong>ジェットファンク</strong>」と名付け、その魅力をDTMで再現するためのプラグイン構成ガイドをまとめました。お手持ちのプラグインを効果的に活用することで、この「ジェットファンク」サウンドをあなたの制作に取り入れることが可能です。
+        </p>
 
-            <h2 class="text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center">ジェットファンクサウンドの主要要素</h2>
+        <h2
+          class="text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center"
+        >
+          ジェットファンクサウンドの主要要素
+        </h2>
 
-            <p>ジェットファンクサウンドを構成する主な要素は以下の通りです。</p>
+        <p>ジェットファンクサウンドを構成する主な要素は以下の通りです。</p>
+        <ul>
+          <li>
+            <strong>サンプリングの芸術</strong>:
+            ファンク、ジャズ、ディスコ、ヒップホップなどからのサンプルを巧みに取り入れ、ボーカルやその他の音源を実験的に加工。
+          </li>
+          <li>
+            <strong>速いBPMのファンクグルーヴ</strong>:
+            エネルギッシュなペースとリズミカルな特性を持つドライビングビートとシンセサイザーサウンド。ブレイクビーツやEDMの要素も多く取り入れられる。
+          </li>
+          <li>
+            <strong>アシッドベースの導入</strong>: Roland
+            TB-303のような「うねるような、催眠的なサウンド」。
+          </li>
+          <li>
+            <strong>「声ネタ」の活用</strong>:
+            声のサンプルをカット、再配置、加工し、ユニークなアクセントとテクスチャを加える。
+          </li>
+        </ul>
+
+        <h2
+          class="text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center"
+        >
+          プラグイン構成ガイド
+        </h2>
+
+        <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">
+          1. ドラムとグルーヴの構築
+        </h3>
+        <p>
+          ジェットファンクサウンドの核となる「速いBPMのファンクグルーヴ」と「ブレイクビーツ」を構築します。
+        </p>
+        <ul>
+          <li>
+            <strong>ドラムサウンドの選択:</strong>
             <ul>
-                <li><strong>サンプリングの芸術</strong>: ファンク、ジャズ、ディスコ、ヒップホップなどからのサンプルを巧みに取り入れ、ボーカルやその他の音源を実験的に加工。</li>
-                <li><strong>速いBPMのファンクグルーヴ</strong>: エネルギッシュなペースとリズミカルな特性を持つドライビングビートとシンセサイザーサウンド。ブレイクビーツやEDMの要素も多く取り入れられる。</li>
-                <li><strong>アシッドベースの導入</strong>: Roland TB-303のような「うねるような、催眠的なサウンド」。</li>
-                <li><strong>「声ネタ」の活用</strong>: 声のサンプルをカット、再配置、加工し、ユニークなアクセントとテクスチャを加える。</li>
+              <li>
+                <strong>TAL Drum / Battery 4 / XO</strong>:
+                ファンクやブレイクビーツに適したドラムサンプルを選びます。TAL
+                Drumは80-90年代のドラムマシンサウンドに特化しており、レトロな質感に合致します。Battery
+                4やXOは幅広いドラムサウンドから選べます。
+              </li>
+              <li>
+                <strong>DMX / IconDrum</strong>:
+                80年代のヒップホップやポップスで使われたOberheim
+                DMXやLinnDrumのエミュレーションは、ジェットファンクのルーツとなるファンクやソウルのドラムサウンドに近づけるのに有効です。
+              </li>
+              <li>
+                <strong>RX1200</strong>: E-mu
+                SP-1200の12bitサンプラーサウンドを再現。キックやスネアに適用すると、ヒップホップ的なクランチ感のあるローファイな質感が得られます。
+              </li>
             </ul>
-
-            <h2 class="text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center">プラグイン構成ガイド</h2>
-
-            <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">1. ドラムとグルーヴの構築</h3>
-            <p>ジェットファンクサウンドの核となる「速いBPMのファンクグルーヴ」と「ブレイクビーツ」を構築します。</p>
+          </li>
+          <li>
+            <strong>グルーヴの強化:</strong>
             <ul>
-                <li><strong>ドラムサウンドの選択:</strong>
-                    <ul>
-                        <li><strong>TAL Drum / Battery 4 / XO</strong>: ファンクやブレイクビーツに適したドラムサンプルを選びます。TAL Drumは80-90年代のドラムマシンサウンドに特化しており、レトロな質感に合致します。Battery 4やXOは幅広いドラムサウンドから選べます。</li>
-                        <li><strong>DMX / IconDrum</strong>: 80年代のヒップホップやポップスで使われたOberheim DMXやLinnDrumのエミュレーションは、ジェットファンクのルーツとなるファンクやソウルのドラムサウンドに近づけるのに有効です。</li>
-                        <li><strong>RX1200</strong>: E-mu SP-1200の12bitサンプラーサウンドを再現。キックやスネアに適用すると、ヒップホップ的なクランチ感のあるローファイな質感が得られます。</li>
-                    </ul>
-                </li>
-                <li><strong>グルーヴの強化:</strong>
-                    <ul>
-                        <li><strong>ShaperBox / Effectrix / Turnado</strong>: ドラムループやブレイクビーツにこれらのマルチエフェクトを適用し、グリッチ、スタッター、フィルターモジュレーションなどを加えることで、予測不能でエネルギッシュなグルーヴを演出します。</li>
-                        <li><strong>HalfTime</strong>: ドラムループ全体や特定のドラムパートに適用し、ハーフスピードのエフェクトを加えることで、独特の浮遊感や重厚感を出すことができます。</li>
-                    </ul>
-                </li>
+              <li>
+                <strong>ShaperBox / Effectrix / Turnado</strong>:
+                ドラムループやブレイクビーツにこれらのマルチエフェクトを適用し、グリッチ、スタッター、フィルターモジュレーションなどを加えることで、予測不能でエネルギッシュなグルーヴを演出します。
+              </li>
+              <li>
+                <strong>HalfTime</strong>:
+                ドラムループ全体や特定のドラムパートに適用し、ハーフスピードのエフェクトを加えることで、独特の浮遊感や重厚感を出すことができます。
+              </li>
             </ul>
+          </li>
+        </ul>
 
-            <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">2. サンプリングと声ネタの活用</h3>
-            <p>ジェットファンクサウンドの真骨頂である「サンプリングの芸術」と「声ネタの活用」に、<strong>TAL-Sampler</strong>と<strong>Amigo Sampler</strong>を積極的に使用します。</p>
+        <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">
+          2. サンプリングと声ネタの活用
+        </h3>
+        <p>
+          ジェットファンクサウンドの真骨頂である「サンプリングの芸術」と「声ネタの活用」に、<strong>TAL-Sampler</strong>と<strong
+            >Amigo Sampler</strong
+          >を積極的に使用します。
+        </p>
+        <ul>
+          <li>
+            <strong>TAL-Samplerの活用:</strong>
             <ul>
-                <li><strong>TAL-Samplerの活用:</strong>
-                    <ul>
-                        <li><strong>ビンテージサンプラーの質感</strong>: ファンク、ジャズ、ディスコ、ソウル、ヒップホップなどの既存の楽曲からボーカル、ホーン、ギター、シンセなどのフレーズをサンプリングし、TAL-Samplerで加工します。</li>
-                        <li><strong>実験的な加工</strong>: サンプルを大きくピッチシフトしたり、タイムストレッチして、元の意味が失われるまで加工することで、長沼氏の実験的なアプローチを再現します。</li>
-                        <li><strong>ローファイ設定</strong>: TAL-SamplerのDA/ADコンバーターエミュレーションやサンプリングレート/ビットデプス設定を調整し、意図的に音質を劣化させ、独特のローファイな質感を付加します。</li>
-                        <li><strong>ループとチョップ</strong>: サンプルを細かくチョップし、新しいフレーズとして再構築したり、短いループを作成してリズミカルな要素として組み込んだりします。</li>
-                    </ul>
-                </li>
-                <li><strong>Amigo Samplerの活用:</strong>
-                    <ul>
-                        <li><strong>素早いサンプリングと演奏</strong>: インスピレーションが湧いたときにすぐに音源を取り込み、試行錯誤するのに適しています。</li>
-                        <li><strong>声ネタの即興性</strong>: 「声ネタ」をAmigo Samplerに読み込み、リアルタイムでトリガーしたり、ピッチを変えたり、短いフレーズとしてループさせたりすることで、即興的なパフォーマンス感を加えることができます。</li>
-                        <li><strong>ワンショットサンプルの活用</strong>: ドラムのワンショットサンプルや、効果音などをAmigo Samplerに読み込み、直感的に配置してグルーヴを補強します。</li>
-                    </ul>
-                </li>
-                <li><strong>その他のサンプラー/音源:</strong>
-                    <ul>
-                        <li><strong>Emulation II + / DarkLight CMI</strong>: 80年代の象徴的なサンプラーのエミュレーションは、当時のデジタルサウンドの質感を再現するのに非常に有効です。</li>
-                        <li><strong>HERA-ONE</strong>: 女性ボーカルチョップに特化した音源なので、声ネタのバリエーションを増やすのに役立ちます。</li>
-                    </ul>
-                </li>
+              <li>
+                <strong>ビンテージサンプラーの質感</strong>:
+                ファンク、ジャズ、ディスコ、ソウル、ヒップホップなどの既存の楽曲からボーカル、ホーン、ギター、シンセなどのフレーズをサンプリングし、TAL-Samplerで加工します。
+              </li>
+              <li>
+                <strong>実験的な加工</strong>:
+                サンプルを大きくピッチシフトしたり、タイムストレッチして、元の意味が失われるまで加工することで、長沼氏の実験的なアプローチを再現します。
+              </li>
+              <li>
+                <strong>ローファイ設定</strong>:
+                TAL-SamplerのDA/ADコンバーターエミュレーションやサンプリングレート/ビットデプス設定を調整し、意図的に音質を劣化させ、独特のローファイな質感を付加します。
+              </li>
+              <li>
+                <strong>ループとチョップ</strong>:
+                サンプルを細かくチョップし、新しいフレーズとして再構築したり、短いループを作成してリズミカルな要素として組み込んだりします。
+              </li>
             </ul>
-
-            <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">3. アシッドベースとシンセサウンド</h3>
-            <p>ジェットファンクサウンドの特徴である「アシッドベース」と、ファンキーでエネルギッシュなシンセサウンドを構築します。</p>
+          </li>
+          <li>
+            <strong>Amigo Samplerの活用:</strong>
             <ul>
-                <li><strong>アシッドベース:</strong>
-                    <ul>
-                        <li><strong>Phoscyon2 / TAL BassLine 101 / DeeACID</strong>: Roland TB-303やSH-101のエミュレーションは、アシッドベースラインの作成に最適です。フィルターのカットオフとレゾナンスをオートメーションで動的に変化させ、「うねり」と「歪み」を強調します。</li>
-                        <li><strong>LowSane</strong>: 低域に特化したディストーション/マルチエフェクトなので、アシッドベースをさらにアグレッシブにしたり、太さを加えたりするのに活用できます。</li>
-                    </ul>
-                </li>
-                <li><strong>シンセリード/パッド/SE:</strong>
-                    <ul>
-                        <li><strong>U-NO-LX / GX-80 / PolyMAX / ReDominator / Super8</strong>: 温かみのあるアナログサウンドや、80年代のポリシンセサウンドを再現するのに最適です。</li>
-                        <li><strong>Dreamsynth / BA-1 / ATOMIKA</strong>: ユニークな質感のシンセサウンドを作るのに役立ちます。</li>
-                        <li><strong>Discovery</strong>: パワフルなリードやベース、SEに最適です。</li>
-                        <li><strong>FM8 / Chipsynth MD / RYM2612</strong>: きらびやかなベル、エレピ、複雑なベース、そしてジェットファンクサウンドにも見られるような独特の質感のサウンドを作るのに非常に有効です。チップチューンシンセは、レトロゲームのようなSEやメロディに活用できます。</li>
-                        <li><strong>Serum / Massive / SPIRE / Sylenth1</strong>: 現代的なEDMやダンスミュージックの要素を取り入れたい場合に活用できます。</li>
-                        <li><strong>Rave Generator3</strong>: 90年代のレイヴミュージック特有のスタブやフーバーサウンドを生成できます。</li>
-                    </ul>
-                </li>
+              <li>
+                <strong>素早いサンプリングと演奏</strong>:
+                インスピレーションが湧いたときにすぐに音源を取り込み、試行錯誤するのに適しています。
+              </li>
+              <li>
+                <strong>声ネタの即興性</strong>: 「声ネタ」をAmigo
+                Samplerに読み込み、リアルタイムでトリガーしたり、ピッチを変えたり、短いフレーズとしてループさせたりすることで、即興的なパフォーマンス感を加えることができます。
+              </li>
+              <li>
+                <strong>ワンショットサンプルの活用</strong>:
+                ドラムのワンショットサンプルや、効果音などをAmigo
+                Samplerに読み込み、直感的に配置してグルーヴを補強します。
+              </li>
             </ul>
-
-            <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">4. エフェクト処理</h3>
-            <p>ジェットファンクサウンドの「質感」や「空気感」を再現するために、エフェクトを積極的に使用します。</p>
+          </li>
+          <li>
+            <strong>その他のサンプラー/音源:</strong>
             <ul>
-                <li><strong>ローファイ/ビンテージ質感:</strong>
-                    <ul>
-                        <li><strong>RC-20 / Super VHS / BABY AUDIO TAIP / RX950 / MSXII Lo-fly Dirt / Lifeline Dirt / Tape / Magnetite / DirtyTape / Flavor Pro / PCM2612</strong>: これらのプラグインは、レコードノイズ、テープの揺れ、サチュレーション、ビットクラッシュなど、様々な形でローファイな質感やビンテージ感を付加できます。あらゆるトラックに積極的に適用し、ジェットファンクサウンド特有の「汚れた」しかし「温かい」質感を追求します。</li>
-                        <li><strong>GameVerb</strong>: 8bit/16bitゲーム風のチープで個性的なリバーブは、ジェットファンクサウンドのレトロゲーム的な雰囲気を強調するのに役立ちます。</li>
-                    </ul>
-                </li>
-                <li><strong>ダイナミクス/ミキシング:</strong>
-                    <ul>
-                        <li><strong>SSL Native Essentials Bundle / API Vision Channel Strip / bx_Console N / 32Classic Channel</strong>: これらのチャンネルストリップは、ジェットファンクサウンドのパンチとクリアさを両立させるのに役立ちます。</li>
-                        <li><strong>UAD 1176 / bx_Townhouse Buss Compressor / Smasher / Combustor / HAMMER / VINAI XTT / DynaBunny</strong>: 各種コンプレッサーは、ドラムやベースをタイトにしたり、アグレッシブなサウンドにしたりするのに活用します。</li>
-                        <li><strong>Oxford Inflator / DeePopMax</strong>: 音圧とラウドネスを自然に向上させ、楽曲全体に迫力を与えます。</li>
-                        <li><strong>Oxford TransMod</strong>: ドラムのアタックを強調したり、シンセのサステインを調整したりして、グルーヴと音の立ち上がりをコントロールします。</li>
-                    </ul>
-                </li>
-                <li><strong>空間系:</strong>
-                    <ul>
-                        <li><strong>ValhallaVintageVerb / LX480 Essentials / Echorec / Comeback Kid / EchoBoyJr</strong>: リバーブやディレイは、サウンドに深みや広がりを与えるだけでなく、ジェットファンクサウンドの持つ「浮遊感」や「サイケデリックな雰囲気」を演出するのに重要です。</li>
-                    </ul>
-                </li>
-                <li><strong>ボーカル処理:</strong>
-                    <ul>
-                        <li><strong>VocalSynth2 / DeeVocoder / Nectar3</strong>: 声ネタやSynthesizer Vで生成したボーカルに、ボコーダーやトークボックス、ハーモナイザーなどのエフェクトを適用し、長沼氏のように実験的に加工します。</li>
-                    </ul>
-                </li>
+              <li>
+                <strong>Emulation II + / DarkLight CMI</strong>:
+                80年代の象徴的なサンプラーのエミュレーションは、当時のデジタルサウンドの質感を再現するのに非常に有効です。
+              </li>
+              <li>
+                <strong>HERA-ONE</strong>:
+                女性ボーカルチョップに特化した音源なので、声ネタのバリエーションを増やすのに役立ちます。
+              </li>
             </ul>
+          </li>
+        </ul>
 
-            <h2 class="text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center">全体的なワークフローのヒント</h2>
+        <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">
+          3. アシッドベースとシンセサウンド
+        </h3>
+        <p>
+          ジェットファンクサウンドの特徴である「アシッドベース」と、ファンキーでエネルギッシュなシンセサウンドを構築します。
+        </p>
+        <ul>
+          <li>
+            <strong>アシッドベース:</strong>
             <ul>
-                <li><strong>サンプルの選定と加工</strong>: ファンク、ジャズ、ソウル、ヒップホップなどからフレーズをサンプリングし、<strong>TAL-Sampler</strong>や<strong>Amigo Sampler</strong>でピッチシフト、タイムストレッチ、チョップ、リバース、ローファイ加工などを徹底的に行います。</li>
-                <li><strong>ドラムとベースライン</strong>: 速いBPMのブレイクビーツやファンクグルーヴを構築。ドラムにはRX1200やTAL Drumでローファイ感を加え、アシッドベースにはPhoscyon2やTAL BassLine 101で「うねり」と「歪み」を強調します。</li>
-                <li><strong>シンセレイヤー</strong>: アナログシンセやFMシンセで、ファンキーなリード、分厚いパッド、特徴的なSEなどを加えます。チップチューンシンセでレトロなSEやメロディを挟むのも効果的です。</li>
-                <li><strong>エフェクトによる質感作り</strong>: 各トラックやバスにRC-20、Super VHS、BABY AUDIO TAIPなどのローファイエフェクトを積極的に適用し、ジェットファンクサウンド特有の「汚れた」しかし「温かい」質感を追求します。</li>
-                <li><strong>ミキシングとマスタリング</strong>: チャンネルストリップやコンプレッサーでサウンドを整え、Ozone11やElephantでマスタリングし、音圧とクリアさを両立させます。</li>
+              <li>
+                <strong>Phoscyon2 / TAL BassLine 101 / DeeACID</strong>: Roland
+                TB-303やSH-101のエミュレーションは、アシッドベースラインの作成に最適です。フィルターのカットオフとレゾナンスをオートメーションで動的に変化させ、「うねり」と「歪み」を強調します。
+              </li>
+              <li>
+                <strong>LowSane</strong>:
+                低域に特化したディストーション/マルチエフェクトなので、アシッドベースをさらにアグレッシブにしたり、太さを加えたりするのに活用できます。
+              </li>
             </ul>
-        </section>
+          </li>
+          <li>
+            <strong>シンセリード/パッド/SE:</strong>
+            <ul>
+              <li>
+                <strong>U-NO-LX / GX-80 / PolyMAX / ReDominator / Super8</strong
+                >:
+                温かみのあるアナログサウンドや、80年代のポリシンセサウンドを再現するのに最適です。
+              </li>
+              <li>
+                <strong>Dreamsynth / BA-1 / ATOMIKA</strong>:
+                ユニークな質感のシンセサウンドを作るのに役立ちます。
+              </li>
+              <li>
+                <strong>Discovery</strong>:
+                パワフルなリードやベース、SEに最適です。
+              </li>
+              <li>
+                <strong>FM8 / Chipsynth MD / RYM2612</strong>:
+                きらびやかなベル、エレピ、複雑なベース、そしてジェットファンクサウンドにも見られるような独特の質感のサウンドを作るのに非常に有効です。チップチューンシンセは、レトロゲームのようなSEやメロディに活用できます。
+              </li>
+              <li>
+                <strong>Serum / Massive / SPIRE / Sylenth1</strong>:
+                現代的なEDMやダンスミュージックの要素を取り入れたい場合に活用できます。
+              </li>
+              <li>
+                <strong>Rave Generator3</strong>:
+                90年代のレイヴミュージック特有のスタブやフーバーサウンドを生成できます。
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-        <!-- お問い合わせセクション -->
-        <section class="my-12 bg-dark-orange-darker p-8 rounded-lg shadow-xl">
-            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6 text-center">お問い合わせ</h2>
-            <p class="text-lg text-gray-200 text-center mb-8 max-w-2xl mx-auto">
-                ジェットファンクに関するご質問や、音楽制作のご相談がございましたら、お気軽にお問い合わせください。
-            </p>
-            <form class="max-w-xl mx-auto space-y-4">
-                <div>
-                    <label for="name" class="block text-gray-200 text-sm font-bold mb-2">お名前</label>
-                    <input type="text" id="name" name="name" class="shadow appearance-none border border-gray-600 rounded-md w-full py-3 px-4 text-gray-900 leading-tight focus:outline-none focus:ring-2 focus:ring-dark-orange focus:border-transparent bg-gray-200" placeholder="お名前を入力してください">
-                </div>
-                <div>
-                    <label for="email" class="block text-gray-200 text-sm font-bold mb-2">メールアドレス</label>
-                    <input type="email" id="email" name="email" class="shadow appearance-none border border-gray-600 rounded-md w-full py-3 px-4 text-gray-900 leading-tight focus:outline-none focus:ring-2 focus:ring-dark-orange focus:border-transparent bg-gray-200" placeholder="メールアドレスを入力してください">
-                </div>
-                <div>
-                    <label for="message" class="block text-gray-200 text-sm font-bold mb-2">メッセージ</label>
-                    <textarea id="message" name="message" rows="5" class="shadow appearance-none border border-gray-600 rounded-md w-full py-3 px-4 text-gray-900 leading-tight focus:outline-none focus:ring-2 focus:ring-dark-orange focus:border-transparent bg-gray-200" placeholder="メッセージを入力してください"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="bg-white text-dark-orange font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">
-                        送信
-                    </button>
-                </div>
-            </form>
-        </section>
+        <h3 class="text-2xl sm:text-3xl font-bold text-dark-orange mb-4">
+          4. エフェクト処理
+        </h3>
+        <p>
+          ジェットファンクサウンドの「質感」や「空気感」を再現するために、エフェクトを積極的に使用します。
+        </p>
+        <ul>
+          <li>
+            <strong>ローファイ/ビンテージ質感:</strong>
+            <ul>
+              <li>
+                <strong
+                  >RC-20 / Super VHS / BABY AUDIO TAIP / RX950 / MSXII Lo-fly
+                  Dirt / Lifeline Dirt / Tape / Magnetite / DirtyTape / Flavor
+                  Pro / PCM2612</strong
+                >:
+                これらのプラグインは、レコードノイズ、テープの揺れ、サチュレーション、ビットクラッシュなど、様々な形でローファイな質感やビンテージ感を付加できます。あらゆるトラックに積極的に適用し、ジェットファンクサウンド特有の「汚れた」しかし「温かい」質感を追求します。
+              </li>
+              <li>
+                <strong>GameVerb</strong>:
+                8bit/16bitゲーム風のチープで個性的なリバーブは、ジェットファンクサウンドのレトロゲーム的な雰囲気を強調するのに役立ちます。
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>ダイナミクス/ミキシング:</strong>
+            <ul>
+              <li>
+                <strong
+                  >SSL Native Essentials Bundle / API Vision Channel Strip /
+                  bx_Console N / 32Classic Channel</strong
+                >:
+                これらのチャンネルストリップは、ジェットファンクサウンドのパンチとクリアさを両立させるのに役立ちます。
+              </li>
+              <li>
+                <strong
+                  >UAD 1176 / bx_Townhouse Buss Compressor / Smasher / Combustor
+                  / HAMMER / VINAI XTT / DynaBunny</strong
+                >:
+                各種コンプレッサーは、ドラムやベースをタイトにしたり、アグレッシブなサウンドにしたりするのに活用します。
+              </li>
+              <li>
+                <strong>Oxford Inflator / DeePopMax</strong>:
+                音圧とラウドネスを自然に向上させ、楽曲全体に迫力を与えます。
+              </li>
+              <li>
+                <strong>Oxford TransMod</strong>:
+                ドラムのアタックを強調したり、シンセのサステインを調整したりして、グルーヴと音の立ち上がりをコントロールします。
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>空間系:</strong>
+            <ul>
+              <li>
+                <strong
+                  >ValhallaVintageVerb / LX480 Essentials / Echorec / Comeback
+                  Kid / EchoBoyJr</strong
+                >:
+                リバーブやディレイは、サウンドに深みや広がりを与えるだけでなく、ジェットファンクサウンドの持つ「浮遊感」や「サイケデリックな雰囲気」を演出するのに重要です。
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>ボーカル処理:</strong>
+            <ul>
+              <li>
+                <strong>VocalSynth2 / DeeVocoder / Nectar3</strong>:
+                声ネタやSynthesizer
+                Vで生成したボーカルに、ボコーダーやトークボックス、ハーモナイザーなどのエフェクトを適用し、長沼氏のように実験的に加工します。
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <h2
+          class="text-3xl sm:text-4xl font-bold text-dark-orange mb-8 text-center"
+        >
+          全体的なワークフローのヒント
+        </h2>
+        <ul>
+          <li>
+            <strong>サンプルの選定と加工</strong>:
+            ファンク、ジャズ、ソウル、ヒップホップなどからフレーズをサンプリングし、<strong>TAL-Sampler</strong>や<strong
+              >Amigo Sampler</strong
+            >でピッチシフト、タイムストレッチ、チョップ、リバース、ローファイ加工などを徹底的に行います。
+          </li>
+          <li>
+            <strong>ドラムとベースライン</strong>:
+            速いBPMのブレイクビーツやファンクグルーヴを構築。ドラムにはRX1200やTAL
+            Drumでローファイ感を加え、アシッドベースにはPhoscyon2やTAL BassLine
+            101で「うねり」と「歪み」を強調します。
+          </li>
+          <li>
+            <strong>シンセレイヤー</strong>:
+            アナログシンセやFMシンセで、ファンキーなリード、分厚いパッド、特徴的なSEなどを加えます。チップチューンシンセでレトロなSEやメロディを挟むのも効果的です。
+          </li>
+          <li>
+            <strong>エフェクトによる質感作り</strong>:
+            各トラックやバスにRC-20、Super VHS、BABY AUDIO
+            TAIPなどのローファイエフェクトを積極的に適用し、ジェットファンクサウンド特有の「汚れた」しかし「温かい」質感を追求します。
+          </li>
+          <li>
+            <strong>ミキシングとマスタリング</strong>:
+            チャンネルストリップやコンプレッサーでサウンドを整え、Ozone11やElephantでマスタリングし、音圧とクリアさを両立させます。
+          </li>
+        </ul>
+      </section>
     </main>
 
     <!-- フッター -->
     <footer class="bg-dark-orange py-6 mt-12 shadow-inner rounded-t-lg">
-        <div class="container mx-auto text-center text-white text-sm">
-            <p>&copy; 2025 ジェットファンク・スタイルガイド. All rights reserved.</p>
-            <div class="mt-2 space-x-4">
-                <a href="#" class="hover:text-gray-300 transition-colors duration-300">プライバシーポリシー</a>
-                <a href="#" class="hover:text-gray-300 transition-colors duration-300">利用規約</a>
-            </div>
+      <div class="container mx-auto text-center text-white text-sm">
+        <p>
+          &copy; 2025 ジェットファンク・スタイルガイド. All rights reserved.
+        </p>
+        <div class="mt-2 space-x-4">
+          <a href="#" class="hover:text-gray-300 transition-colors duration-300"
+            >プライバシーポリシー</a
+          >
+          <a href="#" class="hover:text-gray-300 transition-colors duration-300"
+            >利用規約</a
+          >
         </div>
+      </div>
     </footer>
 
     <script>
-        // モバイルメニューのトグル機能
-        const menuButton = document.getElementById('menu-button');
-        const navMenu = document.getElementById('nav-menu');
+      // モバイルメニューのトグル機能
+      const menuButton = document.getElementById("menu-button");
+      const navMenu = document.getElementById("nav-menu");
 
-        menuButton.addEventListener('click', () => {
-            navMenu.classList.toggle('hidden');
-            navMenu.classList.toggle('flex');
-            navMenu.classList.toggle('flex-col');
-        });
+      menuButton.addEventListener("click", () => {
+        navMenu.classList.toggle("hidden");
+        navMenu.classList.toggle("flex");
+        navMenu.classList.toggle("flex-col");
+      });
 
-        // ウィンドウのリサイズ時にメニュー表示を調整 (Tailwindのmdブレークポイントと連動)
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) { // mdブレークポイント (768px)
-                navMenu.classList.remove('hidden', 'flex', 'flex-col');
-                navMenu.classList.add('flex-row');
-            } else {
-                // モバイル表示に戻ったときにhiddenにする
-                if (!menuButton.classList.contains('active')) { // activeクラスでメニューが開いているか判定
-                    navMenu.classList.add('hidden');
-                }
-            }
-        });
+      // ウィンドウのリサイズ時にメニュー表示を調整 (Tailwindのmdブレークポイントと連動)
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          // mdブレークポイント (768px)
+          navMenu.classList.remove("hidden", "flex", "flex-col");
+          navMenu.classList.add("flex-row");
+        } else {
+          // モバイル表示に戻ったときにhiddenにする
+          if (!menuButton.classList.contains("active")) {
+            // activeクラスでメニューが開いているか判定
+            navMenu.classList.add("hidden");
+          }
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
